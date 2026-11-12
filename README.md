@@ -65,7 +65,7 @@ Documentazione: [PEDAGOGIA.md](PEDAGOGIA.md), [ARCHITETTURA.md](ARCHITETTURA.md)
 
 ## Dove si scarica
 
-Repository: <https://github.com/MaestroLivio/semantica-in-gioco>. Le versioni installabili sono nelle **release** GitHub: <https://github.com/MaestroLivio/semantica-in-gioco/releases>. Ogni release contiene l'installer macOS Apple Silicon (`.dmg` arm64), l'installer Windows x64 (`.exe` NSIS) e l'archivio della build web.
+Repository: <https://github.com/MaestroLivio/semantica-in-gioco>. Le versioni installabili sono nelle **release** GitHub: <https://github.com/MaestroLivio/semantica-in-gioco/releases>. Ogni release contiene gli installer macOS (`.dmg` arm64 e x64), l'installer Windows x64 (`.exe` NSIS), l'archivio della build web e i checksum `SHA256SUMS.txt`.
 
 ## Aggiornamento automatico
 

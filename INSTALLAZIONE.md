@@ -2,7 +2,7 @@
 
 L'app nasce come PWA e viene distribuita anche come applicazione desktop autonoma (Electron), con la stessa interfaccia e gli stessi contenuti locali.
 
-**Download:** <https://github.com/MaestroLivio/semantica-in-gioco/releases>. La release 1.2.0 contiene l'installer macOS Apple Silicon (`arm64`), l'installer Windows x64 e l'archivio della build web. Le altre architetture si generano da sorgente con i comandi in fondo.
+**Download:** <https://github.com/MaestroLivio/semantica-in-gioco/releases>. La release 1.2.0 contiene gli installer macOS Apple Silicon (`arm64`) e Intel (`x64`), l'installer Windows x64 e l'archivio della build web. Linux si genera da sorgente con i comandi in fondo.
 
 Nessun installer è firmato digitalmente: non ci sono certificati di code signing in questo progetto. Questo è il motivo degli avvisi di sistema descritti sotto; non indica un file corrotto.
 
@@ -12,11 +12,13 @@ Nessun installer è firmato digitalmente: non ci sono certificati di code signin
 |---|---|---|
 | `semantica-in-gioco-1.2.0-mac-arm64.dmg` | macOS Apple Silicon (M1–M4) | Trascina l'app in *Applicazioni* |
 | `semantica-in-gioco-1.2.0-mac-arm64.zip` | macOS Apple Silicon | Alternativa portatile al DMG |
+| `semantica-in-gioco-1.2.0-mac-x64.dmg` | macOS Intel | Trascina l'app in *Applicazioni* |
+| `semantica-in-gioco-1.2.0-mac-x64.zip` | macOS Intel | Alternativa portatile al DMG |
 | `semantica-in-gioco-1.2.0-windows-x64-installer.exe` | Windows 10/11 x64 | Installer NSIS, installazione per utente |
 | `semantica-in-gioco-1.2.0-windows-x64.zip` | Windows 10/11 x64 | Versione portatile, nessuna installazione |
 | `semantica-in-gioco-1.2.0-web.zip` | Qualsiasi browser, **ChromeOS**, **Android** | Build statica da pubblicare su HTTPS |
 
-I pacchetti Linux e macOS Intel restano alla 1.0.0 e si rigenerano con `npm run dist:linux` e `npm run dist:mac`.
+I pacchetti Linux non sono inclusi nella release e si rigenerano con `npm run dist:linux`.
 
 ## Aggiornamenti
 
@@ -120,7 +122,7 @@ Il prefisso in `/tmp` evita di toccare quello usato dalle app Wineskin dell'uten
 
 - **Nessuna firma digitale**: macOS e Windows mostrano avvisi; per distribuire senza avvisi servono certificati Apple Developer ID e un certificato di code signing Windows. L'aggiornamento automatico apre l'installer, ma non può evitare questi avvisi.
 - **Integrità dell'aggiornamento**: il file arriva via HTTPS dall'API GitHub con il nome atteso per piattaforma e architettura, ma non c'è ancora un controllo di un checksum pubblicato nella release. Va aggiunto prima di considerare l'aggiornamento resistente a manomissioni dell'hosting.
-- **Solo macOS arm64 e Windows x64 sono nella release 1.2.0**: gli altri pacchetti restano alla 1.0.0 finché non vengono rigenerati.
+- **La release 1.2.0 copre macOS (arm64 e x64) e Windows x64**: i pacchetti Linux restano alla 1.0.0 finché non vengono rigenerati.
 - **Windows non è stato avviato su un sistema reale** in questa sessione: l'installer è stato costruito e controllato nel formato, ma va provato su una macchina Windows prima della distribuzione.
 - **Android non ha un pacchetto nativo**: si installa la PWA da Chrome. Un `.apk` richiederebbe Android SDK e un contenitore Capacitor/TWA.
 - ChromeOS richiede HTTPS per l'installazione PWA; aprire il file `index.html` da disco non installa l'app.
