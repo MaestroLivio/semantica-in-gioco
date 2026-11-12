@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useStore } from '../state/store'
 import { Btn, Modal } from './components'
 import { CommunicationBar } from './CommunicationBar'
+import { UpdateNotice } from './UpdateNotice'
 import type { Navigate, Route } from './routes'
 import { Home } from './screens/Home'
 import { ChildHome } from './screens/ChildHome'
@@ -14,6 +15,7 @@ import { Maps } from './screens/Maps'
 import { Settings } from './screens/Settings'
 import { About } from './screens/About'
 import { setSpeechPreferences } from '../state/speech'
+import { setUpdatesBusy } from '../state/updates'
 import { LANGUAGES, useI18n } from '../i18n'
 
 export function App() {
@@ -40,6 +42,11 @@ export function App() {
   // La barra CAA è disponibile durante l'esercizio, come richiesto.
   useEffect(() => {
     setShowCaa(route.name === 'session' || route.name === 'stories' || route.name === 'explore')
+  }, [route.name])
+
+  // Un aggiornamento pronto non deve chiudere l'app a metà di una sessione.
+  useEffect(() => {
+    setUpdatesBusy(route.name === 'session')
   }, [route.name])
 
   // Preferenze audio del profilo: il motore vocale viene scelto qui una volta
@@ -162,6 +169,8 @@ export function App() {
           </Btn>
         </nav>
       </header>
+
+      <UpdateNotice />
 
       {storageError && (
         <div className="alert" role="alert">

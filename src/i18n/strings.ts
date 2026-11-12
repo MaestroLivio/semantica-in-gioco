@@ -226,6 +226,54 @@ export const STRINGS = {
   },
   'settings.backToActivities': { it: 'Torna alle attività', en: 'Back to activities' },
   'settings.toAdults': { it: 'Area adulti', en: 'Adults’ area' },
+  // ——— aggiornamenti (solo app desktop) ———
+  'update.title': { it: 'Aggiornamenti', en: 'Updates' },
+  'update.version': { it: 'Versione installata: {version}', en: 'Installed version: {version}' },
+  'update.check': { it: 'Controlla ora', en: 'Check now' },
+  'update.checking': { it: 'Controllo degli aggiornamenti…', en: 'Checking for updates…' },
+  'update.upToDate': {
+    it: 'Hai già la versione più recente ({version}).',
+    en: 'You already have the latest version ({version}).',
+  },
+  'update.available': {
+    it: 'Aggiornamento {version} disponibile: lo preparo in background.',
+    en: 'Update {version} is available: preparing it in the background.',
+  },
+  'update.downloading': {
+    it: 'Scarico la versione {version} per questo computer… {progress}%',
+    en: 'Downloading version {version} for this computer… {progress}%',
+  },
+  'update.ready': {
+    it: "La versione {version} è pronta: l'app si chiude e apre l'installer.",
+    en: "Version {version} is ready: the app will close and open the installer.",
+  },
+  'update.installing': {
+    it: "Chiusura dell'app e apertura dell'installer…",
+    en: 'Closing the app and opening the installer…',
+  },
+  'update.install': { it: 'Installa e riavvia', en: 'Install and restart' },
+  'update.autoInstall': {
+    it: "Installa automaticamente all'avvio",
+    en: 'Install automatically at startup',
+  },
+  'update.autoInstall.hint': {
+    it: 'Se un aggiornamento è già scaricato, all\'avvio l\'app si chiude e apre l\'installer senza chiedere. Durante una sessione aspetta comunque, per non perdere il lavoro.',
+    en: 'If an update is already downloaded, the app closes and opens the installer at startup without asking. It still waits during a session so no work is lost.',
+  },
+  'update.notes': { it: 'Note della versione', en: 'Release notes' },
+  'update.unsupported': {
+    it: "La release {version} non contiene un file per questo sistema ({platform} {arch}): si aggiorna a mano dalla pagina delle release.",
+    en: 'Release {version} has no file for this system ({platform} {arch}): update manually from the releases page.',
+  },
+  'update.error': {
+    it: 'Non ho potuto controllare gli aggiornamenti: {message}',
+    en: 'I could not check for updates: {message}',
+  },
+  'update.idle': {
+    it: "Il controllo avviene a ogni avvio dell'app.",
+    en: 'The check runs every time the app starts.',
+  },
+
   'settings.section.language': { it: 'Lingua', en: 'Language' },
   'settings.language.note': {
     it: 'La lingua vale per l’interfaccia e per le voci dell’adulto. I contenuti lessicali tradotti sono indicati nella scheda dei contenuti.',

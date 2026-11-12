@@ -11,7 +11,7 @@ npm run e2e       # Playwright (richiede browser installati)
 
 ### Copertura attuale
 
-**Stato**: 95 test superati (27 contenuti, 27 motore, 23 modello didattico, 18 audio).
+**Stato**: 105 test superati (27 contenuti, 27 motore, 23 modello didattico, 18 audio, 10 regole dell'aggiornamento).
 
 **Contenuti** (`src/data/content.test.ts`)
 
@@ -34,6 +34,12 @@ npm run e2e       # Playwright (richiede browser installati)
 - prossimo passo: nessun dato non inventa nulla, errore recente propone ripasso, competenza stabile propone di alzare il livello;
 - scheda parola e parola del giorno (stabile nella giornata, diversa nel tempo);
 - mini-lezione: tre attività valide sul concetto scelto, nessuna lezione per concetti senza immagine.
+
+**Aggiornamento** (`src/engine/updater-rules.test.ts`)
+
+- confronto versioni numerico (`1.2.10` > `1.2.9`), prefisso `v`, prerelease precedente alla stabile, versione non valida che non attiva nulla;
+- scelta del file: su Mac Apple Silicon il DMG `mac-arm64` e non quello Intel, su Mac Intel il `mac-x64`, su Windows l'installer NSIS `windows-x64`, su Linux l'AppImage `amd64` letto come x64;
+- nessun download quando il file adatto manca (architettura sconosciuta, release con solo lo zip web, elenco vuoto).
 
 **Motore** (`src/engine/engine.test.ts`)
 

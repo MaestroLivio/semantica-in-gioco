@@ -120,8 +120,16 @@ La scelta del motore segue `ChildProfile.ttsEngine` (`auto` usa la voce neurale 
 ### Due build
 
 - `npm run build` include la voce neurale Piper (chunk WebAssembly separato, ~45 MB, più gli asset `onnx/`, `piper/`, `worker/`). È la build dell'app desktop.
-- `npm run build:web` (`SEMANTICA_WEB=1`) sostituisce `src/state/tts/neural.ts` con `neural-unavailable.ts`: niente WebAssembly, nessun chunk da 45 MB, voce del dispositivo e registrazioni locali. È la build pubblicata sul web (482 file, 3,7 MB).
+- `npm run build:web` (`SEMANTICA_WEB=1`) sostituisce `src/state/tts/neural.ts` con `neural-unavailable.ts`: niente WebAssembly, nessun chunk da 45 MB, voce del dispositivo e registrazioni locali. È l'archivio web distribuito nelle release (482 file, 3,7 MB).
 - Un plugin di build rimuove i file `._*` creati da macOS sui volumi ExFAT: non sono asset pubblici e alcuni host rifiutano l'upload.
+
+## Aggiornamento dell'app desktop
+
+- `electron/updater-rules.cjs` contiene le sole regole pure: confronto semver e scelta del file per `platform`/`arch`. È testato da `src/engine/updater-rules.test.ts` senza avviare Electron.
+- `electron/updater.cjs` fa il resto nel processo principale: `GET https://api.github.com/repos/MaestroLivio/semantica-in-gioco/releases/latest`, download con redirect e avanzamento, poi `shell.openPath` del DMG su macOS o avvio dell'EXE su Windows, quindi `app.quit()`.
+- Il renderer non tocca la rete: `electron/preload.cjs` espone `window.semantica.updates` (`status`, `check`, `install`, `settings`, `onChange`, `setBusy`) e il main risponde via `ipcMain.handle`. L'unico URL apribile nel browser di sistema è `https://github.com/...`.
+- Lo stato `busy` arriva da `App.tsx` (route `session`): finché è vero il download continua ma la chiusura automatica è rinviata, per non perdere il lavoro.
+- Non si usa `electron-updater`: senza firma digitale Squirrel.Mac rifiuterebbe l'aggiornamento, mentre aprire l'installer funziona su tutte le piattaforme. Non c'è ancora un checksum pubblicato da verificare.
 
 ## Estensioni previste
 

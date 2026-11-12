@@ -63,9 +63,24 @@ release/                   installer e pacchetti generati (non versionati)
 
 Documentazione: [PEDAGOGIA.md](PEDAGOGIA.md), [ARCHITETTURA.md](ARCHITETTURA.md), [GUIDA_INSEGNANTE.md](GUIDA_INSEGNANTE.md), [GUIDA_CONTENUTI.md](GUIDA_CONTENUTI.md), [ACCESSIBILITA.md](ACCESSIBILITA.md), [TEST.md](TEST.md), [CHANGELOG.md](CHANGELOG.md).
 
+## Dove si scarica
+
+Repository: <https://github.com/MaestroLivio/semantica-in-gioco>. Le versioni installabili sono nelle **release** GitHub: <https://github.com/MaestroLivio/semantica-in-gioco/releases>. Ogni release contiene l'installer macOS Apple Silicon (`.dmg` arm64), l'installer Windows x64 (`.exe` NSIS) e l'archivio della build web.
+
+## Aggiornamento automatico
+
+L'app desktop interroga le release GitHub **a ogni avvio** (`electron/updater.cjs`, regole in `electron/updater-rules.cjs`):
+
+1. confronta il tag dell'ultima release con la versione installata;
+2. se è più recente sceglie il file adatto al sistema e all'architettura — `mac-arm64.dmg` su Mac Apple Silicon, `mac-x64.dmg` su Mac Intel, `windows-x64-installer.exe` su Windows — e non scarica mai un pacchetto di un'altra piattaforma;
+3. scarica in background mostrando l'avanzamento senza bloccare l'uso;
+4. chiude l'app e apre l'installer scaricato (`shell.openPath` del DMG su macOS, avvio dell'EXE su Windows).
+
+Se è in corso una sessione l'app **non** si chiude da sola: aspetta la fine del lavoro. L'interruttore «Installa automaticamente all'avvio» e il pulsante «Controlla ora» sono in *Impostazioni → Aggiornamenti*; le note della release si aprono da lì. Senza rete, o se la release non contiene un file adatto, l'app resta sulla versione installata e lo dichiara. Il file scaricato non è firmato da un'autorità: macOS e Windows chiedono comunque conferma all'apertura dell'installer.
+
 ## Versione web
 
-La versione 1.2.0 è pubblicata su <https://site-08f3ab6cabe24e9da8845e270a0fd220.freebuff.page>: build statica, nessun backend, dati nel browser. Si rigenera con `npm run build:web` e si pubblica con il manifest `sites.deploy.json`. In questa build la voce neurale Piper non è inclusa (108 MB di WebAssembly): l'app usa la voce italiana del dispositivo o le registrazioni personalizzate, e lo dichiara in *Impostazioni → Voce e modello*.
+La build statica (`npm run build:web`) è distribuita come `semantica-in-gioco-<versione>-web.zip` nelle release: nessun backend, dati nel browser. In questa build la voce neurale Piper non è inclusa (108 MB di WebAssembly): l'app usa la voce italiana del dispositivo o le registrazioni personalizzate, e lo dichiara in *Impostazioni → Voce e modello*.
 
 ## App desktop e installer
 
@@ -73,13 +88,15 @@ La stessa build è distribuita come applicazione desktop Electron per macOS, Win
 
 ```bash
 npm run start:desktop   # build + avvio desktop senza pacchettizzare
+npm run dist:mac:arm    # DMG + ZIP per Mac Apple Silicon (arm64)
+npm run dist:win:x64    # installer NSIS + ZIP per Windows x64
 npm run dist:mac        # DMG + ZIP per arm64 e x64
 npm run dist:win        # installer NSIS + ZIP x64
 npm run dist:linux      # AppImage, deb, tar.gz per arm64 e x64
 npm run pack:pwa        # archivio della build per hosting HTTPS (ChromeOS)
 ```
 
-I pacchetti non sono firmati digitalmente e non hanno aggiornamento automatico: macOS e Windows mostrano un avviso al primo avvio.
+I pacchetti non sono firmati digitalmente: macOS e Windows mostrano un avviso al primo avvio. L'aggiornamento automatico dalle release GitHub è descritto sopra.
 
 ## Dati e privacy
 

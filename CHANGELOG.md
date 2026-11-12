@@ -13,8 +13,9 @@
 - **Parola del giorno** e **mini-lezione** sul concetto scelto (`conceptLesson`): tre attività generate sul concetto, senza passare dalla banca, così la parola mostrata è davvero quella.
 - **Guida per l'adulto in sessione**: pannello richiudibile con obiettivo del modulo e indicazioni operative, accanto al bambino e non davanti.
 - **Build web** (`npm run build:web`): sostituisce il motore neurale con una variante che dichiara il limite, elimina il chunk WebAssembly da ~45 MB e produce 482 file / 3,7 MB.
-- **Pubblicazione** su Freebuff Sites con `sites.deploy.json` e `sites/worker.js`: <https://site-08f3ab6cabe24e9da8845e270a0fd220.freebuff.page>.
-- 23 nuovi test (modello didattico e mini-lezione): **95 test totali**.
+- **Aggiornamento automatico dell'app desktop** (`electron/updater.cjs`, `electron/updater-rules.cjs`): a ogni avvio l'app interroga le release GitHub, confronta la versione, scarica solo il file della propria piattaforma (DMG arm64/x64 per macOS, installer NSIS x64 per Windows, AppImage per Linux), poi si chiude e apre l'installer. Avanzamento visibile in un avviso non invasivo; durante una sessione non si chiude da sola. Pannello «Aggiornamenti» in Impostazioni con «Controlla ora», note della release e interruttore «Installa automaticamente all'avvio» (preferenza salvata in `aggiornamenti.json` nella cartella dati). Il renderer non ha accesso alla rete: parla al processo principale via `electron/preload.cjs` (`contextBridge` + IPC), con URL delle release limitati a `https://github.com/`.
+- **Distribuzione su GitHub**: repository <https://github.com/MaestroLivio/semantica-in-gioco> e release con installer macOS arm64, Windows x64 e archivio web.
+- 23 nuovi test (modello didattico e mini-lezione) e 10 sulle regole dell'aggiornamento: **105 test totali**.
 
 ### Cambiato
 
@@ -27,7 +28,8 @@
 ### Note
 
 - Nella build web la voce neurale Piper non è disponibile: si usa la voce italiana del dispositivo o le registrazioni personalizzate, e l'app lo dichiara in Impostazioni → Voce e modello. L'app desktop continua a includerla.
-- I pacchetti in `release/` restano quelli della 1.0.0: la versione web è la 1.2.0. Per rigenerare gli installer usare `npm run dist:*` (i nomi includono la nuova versione).
+- Pacchetti 1.2.0 rigenerati per macOS arm64 (`npm run dist:mac:arm`) e Windows x64 (`npm run dist:win:x64`); le altre architetture restano alla 1.0.0.
+- L'aggiornamento automatico apre l'installer ma non firma nulla: su macOS il DMG va trascinato in Applicazioni, su Windows l'installer NSIS chiede conferma. Non c'è ancora una verifica crittografica del file scaricato oltre al TLS di GitHub.
 - Il modello didattico è motivato e verificato nei suoi comportamenti software, non con uno studio controllato: resta uno strumento educativo, non una terapia.
 
 ## 1.1.0 — motore vocale neurale (in verifica)

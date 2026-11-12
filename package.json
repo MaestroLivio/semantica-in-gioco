@@ -19,7 +19,9 @@
     "pack:pwa": "npm run build && node scripts/make-pwa-archive.mjs",
     "dist": "npm run build && electron-builder",
     "dist:mac": "npm run build && electron-builder --mac",
+    "dist:mac:arm": "npm run build && electron-builder --mac --arm64 --publish never",
     "dist:win": "npm run build && electron-builder --win",
+    "dist:win:x64": "npm run build && electron-builder --win --x64 --publish never",
     "dist:linux": "npm run build && electron-builder --linux",
     "dist:all": "npm run build && electron-builder --mac --win --linux"
   },
@@ -47,6 +49,8 @@
     "copyright": "Semantica in Gioco - strumento educativo non commerciale",
     "asar": true,
     "compression": "normal",
+    "afterExtract": "scripts/strip-appledouble.cjs",
+    "afterPack": "scripts/strip-appledouble.cjs",
     "directories": {
       "output": "release",
       "buildResources": "build"

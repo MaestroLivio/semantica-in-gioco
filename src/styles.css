@@ -3146,3 +3146,31 @@ html.is-uppercase select {
     transition: none;
   }
 }
+
+/* ——— aggiornamento dell'app desktop ——— */
+.update-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px;
+  background: #e7efe9;
+  border-bottom: 1px solid #c2d5c8;
+  color: #1f3b2c;
+}
+
+.update-notice p {
+  flex: 1 1 320px;
+  margin: 0;
+}
+
+.is-contrast .update-notice {
+  background: #000;
+  color: #fff;
+  border-bottom: 2px solid #fff;
+}
+
+.is-essential .update-notice {
+  background: #fff;
+  border-bottom: 2px solid #000;
+}

@@ -1,9 +1,10 @@
 // Processo principale dell'app desktop. La build statica di Vite viene servita
 // da un protocollo interno (app://bundle) e non da file://: i moduli ES e i
 // worker, da file://, verrebbero bloccati dalle regole CORS del browser.
-const { app, BrowserWindow, Menu, shell, dialog, protocol } = require('electron')
+const { app, BrowserWindow, Menu, shell, dialog, protocol, ipcMain } = require('electron')
 const fs = require('node:fs/promises')
 const path = require('node:path')
+const updater = require('./updater.cjs')
 
 const APP_NAME = 'Semantica in Gioco'
 const APP_ORIGIN = 'app://bundle'
@@ -82,6 +83,7 @@ function createWindow() {
       nodeIntegration: false,
       sandbox: true,
       spellcheck: true,
+      preload: path.join(__dirname, 'preload.cjs'),
     },
   })
 
@@ -176,11 +178,39 @@ app.on('second-instance', () => {
   }
 })
 
+// L'interfaccia chiede, il processo principale esegue: nessun accesso di rete
+// dal renderer e nessun download deciso dalla pagina.
+function registerUpdateIpc() {
+  ipcMain.handle('updates:status', () => updater.getState())
+  ipcMain.handle('updates:check', () => updater.check({ autoInstallAfter: false }))
+  ipcMain.handle('updates:install', () => updater.installNow())
+  ipcMain.handle('updates:settings', () => updater.getSettings())
+  ipcMain.handle('updates:settings:set', (_event, patch) => updater.saveSettings(patch))
+  ipcMain.on('updates:busy', (_event, value) => updater.setBusy(Boolean(value)))
+  ipcMain.on('updates:open-release', (_event, url) => updater.openRelease(url))
+}
+
 app.whenReady().then(() => {
   app.setName(APP_NAME)
   serveBuild()
   buildMenu()
   createWindow()
+
+  updater.loadSettings()
+  updater.subscribe((state) => {
+    if (mainWindow && !mainWindow.isDestroyed()) mainWindow.webContents.send('updates:status', state)
+  })
+  registerUpdateIpc()
+
+  // Controllo a ogni avvio, in background: non ritarda l'apertura della
+  // finestra e non blocca il lavoro se la rete manca. `--no-update-check`
+  // serve a laboratorio e test.
+  if (app.isPackaged && !process.argv.includes('--no-update-check')) {
+    setTimeout(() => {
+      void updater.check()
+    }, 5000)
+  }
+
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })

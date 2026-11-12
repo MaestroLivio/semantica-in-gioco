@@ -3,6 +3,7 @@ import { useStore } from '../../state/store'
 import { Btn, Card, Range, Segmented, Toggle } from '../components'
 import { listVoices, hasItalianVoice, speak } from '../../state/speech'
 import { SpeechPanel } from '../SpeechPanel'
+import { UpdatePanel } from '../UpdatePanel'
 import type { Navigate } from '../routes'
 import type { ChildProfile } from '../../state/profile'
 import { LANGUAGES, useI18n } from '../../i18n'
@@ -244,6 +245,8 @@ export function Settings({ onNavigate }: { onNavigate: Navigate }) {
           />
           <p className="muted">{t('settings.mastery.note')}</p>
         </Card>
+
+        <UpdatePanel />
       </div>
 
       <div className="actions-row">
