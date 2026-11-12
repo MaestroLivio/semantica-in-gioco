@@ -1,0 +1,13 @@
+node_modules
+dist
+release
+playwright-report
+test-results
+tsconfig.tsbuildinfo
+.freebuff
+.pages-build
+.DS_Store
+._*
+*.local
+.env
+.env.*

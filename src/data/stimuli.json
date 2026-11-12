@@ -1,0 +1,1570 @@
+{
+  "cane": {
+    "pictogram": 7202,
+    "alts": [
+      36424
+    ]
+  },
+  "gatto": {
+    "pictogram": 7114,
+    "alts": [
+      2406
+    ]
+  },
+  "cavallo": {
+    "pictogram": 2294,
+    "alts": [
+      34205
+    ]
+  },
+  "mucca": {
+    "pictogram": 2609,
+    "alts": []
+  },
+  "pecora": {
+    "pictogram": 2489,
+    "alts": []
+  },
+  "maiale": {
+    "pictogram": 24972,
+    "alts": [
+      25622
+    ]
+  },
+  "gallina": {
+    "pictogram": 2403,
+    "alts": []
+  },
+  "coniglio": {
+    "pictogram": 2351,
+    "alts": [
+      25624
+    ]
+  },
+  "topo": {
+    "pictogram": 2546,
+    "alts": [
+      28845
+    ]
+  },
+  "leone": {
+    "pictogram": 25187,
+    "alts": []
+  },
+  "elefante": {
+    "pictogram": 2372,
+    "alts": []
+  },
+  "scimmia": {
+    "pictogram": 2477,
+    "alts": []
+  },
+  "orso": {
+    "pictogram": 2488,
+    "alts": [
+      2868
+    ]
+  },
+  "volpe": {
+    "pictogram": 2623,
+    "alts": []
+  },
+  "uccello": {
+    "pictogram": 2490,
+    "alts": [
+      6923
+    ]
+  },
+  "pesce": {
+    "pictogram": 2520,
+    "alts": [
+      2519
+    ]
+  },
+  "ape": {
+    "pictogram": 24823,
+    "alts": [
+      2239
+    ]
+  },
+  "farfalla": {
+    "pictogram": 26200,
+    "alts": [
+      2465
+    ]
+  },
+  "tartaruga": {
+    "pictogram": 26503,
+    "alts": [
+      2596
+    ]
+  },
+  "rana": {
+    "pictogram": 28473,
+    "alts": []
+  },
+  "mela": {
+    "pictogram": 2462,
+    "alts": []
+  },
+  "banana": {
+    "pictogram": 2530,
+    "alts": []
+  },
+  "pera": {
+    "pictogram": 2561,
+    "alts": []
+  },
+  "arancia": {
+    "pictogram": 2483,
+    "alts": []
+  },
+  "fragola": {
+    "pictogram": 2400,
+    "alts": []
+  },
+  "uva": {
+    "pictogram": 3247,
+    "alts": []
+  },
+  "limone": {
+    "pictogram": 3022,
+    "alts": []
+  },
+  "anguria": {
+    "pictogram": 2557,
+    "alts": []
+  },
+  "pesca": {
+    "pictogram": 2468,
+    "alts": [
+      6592
+    ]
+  },
+  "ciliegia": {
+    "pictogram": 8303,
+    "alts": []
+  },
+  "carota": {
+    "pictogram": 2619,
+    "alts": []
+  },
+  "insalata": {
+    "pictogram": 2377,
+    "alts": []
+  },
+  "pomodoro": {
+    "pictogram": 2594,
+    "alts": []
+  },
+  "patata": {
+    "pictogram": 2503,
+    "alts": []
+  },
+  "zucchina": {
+    "pictogram": 2678,
+    "alts": []
+  },
+  "cipolla": {
+    "pictogram": 2323,
+    "alts": []
+  },
+  "broccoli": {
+    "pictogram": 23853,
+    "alts": []
+  },
+  "mais": {
+    "pictogram": 4879,
+    "alts": []
+  },
+  "pane": {
+    "pictogram": 2494,
+    "alts": []
+  },
+  "pasta": {
+    "pictogram": 8652,
+    "alts": []
+  },
+  "riso": {
+    "pictogram": 6911,
+    "alts": [
+      35555
+    ]
+  },
+  "formaggio": {
+    "pictogram": 2541,
+    "alts": [
+      25363
+    ]
+  },
+  "uovo": {
+    "pictogram": 2427,
+    "alts": []
+  },
+  "gelato": {
+    "pictogram": 35209,
+    "alts": [
+      2420
+    ]
+  },
+  "biscotto": {
+    "pictogram": 8295,
+    "alts": []
+  },
+  "minestra": {
+    "pictogram": 2573,
+    "alts": []
+  },
+  "torta": {
+    "pictogram": 2502,
+    "alts": [
+      8706
+    ]
+  },
+  "miele": {
+    "pictogram": 2911,
+    "alts": []
+  },
+  "acqua": {
+    "pictogram": 32464,
+    "alts": [
+      2248
+    ]
+  },
+  "latte": {
+    "pictogram": 2445,
+    "alts": [
+      37918
+    ]
+  },
+  "succo": {
+    "pictogram": 11461,
+    "alts": []
+  },
+  "te": {
+    "pictogram": 6625,
+    "alts": [
+      2429
+    ]
+  },
+  "maglietta": {
+    "pictogram": 2309,
+    "alts": []
+  },
+  "pantaloni": {
+    "pictogram": 2565,
+    "alts": [
+      37817
+    ]
+  },
+  "scarpe": {
+    "pictogram": 2775,
+    "alts": [
+      6634
+    ]
+  },
+  "cappotto": {
+    "pictogram": 2242,
+    "alts": []
+  },
+  "cappello": {
+    "pictogram": 39395,
+    "alts": [
+      35387
+    ]
+  },
+  "calzini": {
+    "pictogram": 2298,
+    "alts": []
+  },
+  "gonna": {
+    "pictogram": 2391,
+    "alts": []
+  },
+  "guanti": {
+    "pictogram": 2415,
+    "alts": []
+  },
+  "sciarpa": {
+    "pictogram": 2290,
+    "alts": []
+  },
+  "pigiama": {
+    "pictogram": 2522,
+    "alts": []
+  },
+  "palla": {
+    "pictogram": 3241,
+    "alts": [
+      37927
+    ]
+  },
+  "bambola": {
+    "pictogram": 26238,
+    "alts": [
+      2482
+    ]
+  },
+  "trenino": {
+    "pictogram": 5094,
+    "alts": [
+      5105
+    ]
+  },
+  "puzzle": {
+    "pictogram": 2540,
+    "alts": [
+      38013
+    ]
+  },
+  "orsetto": {
+    "pictogram": 4945,
+    "alts": []
+  },
+  "bicicletta": {
+    "pictogram": 6935,
+    "alts": [
+      2277
+    ]
+  },
+  "aquilone": {
+    "pictogram": 2350,
+    "alts": []
+  },
+  "automobile": {
+    "pictogram": 2339,
+    "alts": [
+      6981
+    ]
+  },
+  "autobus": {
+    "pictogram": 2262,
+    "alts": [
+      26654
+    ]
+  },
+  "treno": {
+    "pictogram": 2603,
+    "alts": [
+      5094
+    ]
+  },
+  "aereo": {
+    "pictogram": 2264,
+    "alts": [
+      6924
+    ]
+  },
+  "nave": {
+    "pictogram": 6932,
+    "alts": [
+      2273
+    ]
+  },
+  "moto": {
+    "pictogram": 7166,
+    "alts": [
+      2480
+    ]
+  },
+  "camion": {
+    "pictogram": 6956,
+    "alts": [
+      2306
+    ]
+  },
+  "trattore": {
+    "pictogram": 2600,
+    "alts": [
+      39575
+    ]
+  },
+  "matita": {
+    "pictogram": 2440,
+    "alts": []
+  },
+  "penna": {
+    "pictogram": 2282,
+    "alts": []
+  },
+  "quaderno": {
+    "pictogram": 2359,
+    "alts": [
+      37189
+    ]
+  },
+  "libro": {
+    "pictogram": 25191,
+    "alts": []
+  },
+  "forbici": {
+    "pictogram": 2591,
+    "alts": [
+      6664
+    ]
+  },
+  "colla": {
+    "pictogram": 2709,
+    "alts": []
+  },
+  "zaino": {
+    "pictogram": 2475,
+    "alts": [
+      37518
+    ]
+  },
+  "gomma": {
+    "pictogram": 2929,
+    "alts": [
+      27393
+    ]
+  },
+  "righello": {
+    "pictogram": 2815,
+    "alts": []
+  },
+  "sedia": {
+    "pictogram": 3155,
+    "alts": [
+      4960
+    ]
+  },
+  "tavolo": {
+    "pictogram": 3129,
+    "alts": []
+  },
+  "letto": {
+    "pictogram": 25900,
+    "alts": [
+      2304
+    ]
+  },
+  "armadio": {
+    "pictogram": 2258,
+    "alts": [
+      6909
+    ]
+  },
+  "divano": {
+    "pictogram": 25479,
+    "alts": [
+      2571
+    ]
+  },
+  "scaffale": {
+    "pictogram": 2386,
+    "alts": []
+  },
+  "specchio": {
+    "pictogram": 8573,
+    "alts": [
+      37922
+    ]
+  },
+  "cucchiaio": {
+    "pictogram": 2362,
+    "alts": [
+      26549
+    ]
+  },
+  "forchetta": {
+    "pictogram": 2588,
+    "alts": [
+      26557
+    ]
+  },
+  "coltello": {
+    "pictogram": 4931,
+    "alts": [
+      26553
+    ]
+  },
+  "piatto": {
+    "pictogram": 16857,
+    "alts": [
+      30488
+    ]
+  },
+  "bicchiere": {
+    "pictogram": 2610,
+    "alts": [
+      37272
+    ]
+  },
+  "pentola": {
+    "pictogram": 3231,
+    "alts": []
+  },
+  "scopa": {
+    "pictogram": 2693,
+    "alts": []
+  },
+  "secchio": {
+    "pictogram": 2725,
+    "alts": []
+  },
+  "mano": {
+    "pictogram": 2928,
+    "alts": [
+      6610
+    ]
+  },
+  "piede": {
+    "pictogram": 25327,
+    "alts": [
+      37974
+    ]
+  },
+  "occhio": {
+    "pictogram": 6573,
+    "alts": [
+      39870
+    ]
+  },
+  "orecchio": {
+    "pictogram": 2871,
+    "alts": []
+  },
+  "naso": {
+    "pictogram": 2887,
+    "alts": [
+      16821
+    ]
+  },
+  "bocca": {
+    "pictogram": 2663,
+    "alts": [
+      34848
+    ]
+  },
+  "denti": {
+    "pictogram": 2737,
+    "alts": [
+      6971
+    ]
+  },
+  "capelli": {
+    "pictogram": 2851,
+    "alts": [
+      27696
+    ]
+  },
+  "gamba": {
+    "pictogram": 8666,
+    "alts": [
+      39084
+    ]
+  },
+  "braccio": {
+    "pictogram": 2669,
+    "alts": [
+      16847
+    ]
+  },
+  "casa": {
+    "pictogram": 6964,
+    "alts": [
+      2317
+    ]
+  },
+  "scuola": {
+    "pictogram": 32446,
+    "alts": [
+      3082
+    ]
+  },
+  "ospedale": {
+    "pictogram": 36210,
+    "alts": [
+      3116
+    ]
+  },
+  "parco": {
+    "pictogram": 2859,
+    "alts": [
+      30609
+    ]
+  },
+  "supermercato": {
+    "pictogram": 3389,
+    "alts": [
+      6618
+    ]
+  },
+  "cucina": {
+    "pictogram": 2341,
+    "alts": [
+      5965
+    ]
+  },
+  "bagno": {
+    "pictogram": 5921,
+    "alts": [
+      2430
+    ]
+  },
+  "camera": {
+    "pictogram": 5988,
+    "alts": [
+      2939
+    ]
+  },
+  "giardino": {
+    "pictogram": 2434,
+    "alts": [
+      30609
+    ]
+  },
+  "strada": {
+    "pictogram": 2302,
+    "alts": [
+      32508
+    ]
+  },
+  "medico": {
+    "pictogram": 6561,
+    "alts": [
+      2467
+    ]
+  },
+  "insegnante": {
+    "pictogram": 21022,
+    "alts": [
+      32938
+    ]
+  },
+  "cuoco": {
+    "pictogram": 30526,
+    "alts": [
+      6985
+    ]
+  },
+  "pompiere": {
+    "pictogram": 6066,
+    "alts": [
+      2664
+    ]
+  },
+  "postino": {
+    "pictogram": 2690,
+    "alts": [
+      38546
+    ]
+  },
+  "panettiere": {
+    "pictogram": 3358,
+    "alts": [
+      6577
+    ]
+  },
+  "contadino": {
+    "pictogram": 2982,
+    "alts": [
+      6035
+    ]
+  },
+  "poliziotto": {
+    "pictogram": 37367,
+    "alts": [
+      2824
+    ]
+  },
+  "chitarra": {
+    "pictogram": 2417,
+    "alts": []
+  },
+  "pianoforte": {
+    "pictogram": 2521,
+    "alts": [
+      7270
+    ]
+  },
+  "tamburo": {
+    "pictogram": 2578,
+    "alts": [
+      36468
+    ]
+  },
+  "flauto": {
+    "pictogram": 2396,
+    "alts": []
+  },
+  "violino": {
+    "pictogram": 2615,
+    "alts": []
+  },
+  "tromba": {
+    "pictogram": 2607,
+    "alts": []
+  },
+  "sole": {
+    "pictogram": 7252,
+    "alts": [
+      2798
+    ]
+  },
+  "luna": {
+    "pictogram": 2933,
+    "alts": [
+      38400
+    ]
+  },
+  "stella": {
+    "pictogram": 2752,
+    "alts": [
+      4644
+    ]
+  },
+  "pioggia": {
+    "pictogram": 3123,
+    "alts": []
+  },
+  "nuvola": {
+    "pictogram": 2883,
+    "alts": []
+  },
+  "neve": {
+    "pictogram": 3135,
+    "alts": []
+  },
+  "albero": {
+    "pictogram": 3057,
+    "alts": [
+      32462
+    ]
+  },
+  "fiore": {
+    "pictogram": 7104,
+    "alts": [
+      3127
+    ]
+  },
+  "fiume": {
+    "pictogram": 2811,
+    "alts": [
+      6037
+    ]
+  },
+  "televisione": {
+    "pictogram": 25498,
+    "alts": [
+      2782
+    ]
+  },
+  "telefono": {
+    "pictogram": 26479,
+    "alts": [
+      2585
+    ]
+  },
+  "frigorifero": {
+    "pictogram": 3272,
+    "alts": []
+  },
+  "lavatrice": {
+    "pictogram": 2442,
+    "alts": [
+      39449
+    ]
+  },
+  "lampada": {
+    "pictogram": 4936,
+    "alts": []
+  },
+  "chiave": {
+    "pictogram": 8153,
+    "alts": [
+      9128
+    ]
+  },
+  "orologio": {
+    "pictogram": 2549,
+    "alts": [
+      7230
+    ]
+  },
+  "ombrello": {
+    "pictogram": 2500,
+    "alts": []
+  },
+  "spazzolino": {
+    "pictogram": 2694,
+    "alts": [
+      6971
+    ]
+  },
+  "sapone": {
+    "pictogram": 8094,
+    "alts": [
+      25171
+    ]
+  },
+  "asciugamano": {
+    "pictogram": 2593,
+    "alts": []
+  },
+  "spazzola": {
+    "pictogram": 2695,
+    "alts": [
+      38471
+    ]
+  },
+  "dentifricio": {
+    "pictogram": 2858,
+    "alts": []
+  },
+  "bambino": {
+    "pictogram": 7176,
+    "alts": [
+      37446
+    ]
+  },
+  "bambina": {
+    "pictogram": 27509,
+    "alts": [
+      37446
+    ]
+  },
+  "mamma": {
+    "pictogram": 2458,
+    "alts": []
+  },
+  "papa": {
+    "pictogram": 31146,
+    "alts": []
+  },
+  "nonno": {
+    "pictogram": 23718,
+    "alts": []
+  },
+  "amico": {
+    "pictogram": 25790,
+    "alts": [
+      8487
+    ]
+  },
+  "rosa": {
+    "pictogram": 38635,
+    "alts": [
+      7104
+    ]
+  },
+  "margherita": {
+    "pictogram": 3127,
+    "alts": []
+  },
+  "erba": {
+    "pictogram": 3113,
+    "alts": [
+      39711
+    ]
+  },
+  "foglia": {
+    "pictogram": 5077,
+    "alts": []
+  },
+  "seme": {
+    "pictogram": 8321,
+    "alts": []
+  },
+  "rosso": {
+    "pictogram": 2808,
+    "alts": [
+      37187
+    ]
+  },
+  "blu": {
+    "pictogram": 4869,
+    "alts": []
+  },
+  "giallo": {
+    "pictogram": 2648,
+    "alts": []
+  },
+  "verde": {
+    "pictogram": 4887,
+    "alts": [
+      37188
+    ]
+  },
+  "nero": {
+    "pictogram": 2886,
+    "alts": []
+  },
+  "bianco": {
+    "pictogram": 8043,
+    "alts": []
+  },
+  "cerchio": {
+    "pictogram": 4603,
+    "alts": [
+      3253
+    ]
+  },
+  "triangolo": {
+    "pictogram": 2604,
+    "alts": [
+      4763
+    ]
+  },
+  "stella_forma": {
+    "pictogram": 2752,
+    "alts": [
+      4644
+    ]
+  },
+  "mangiare": {
+    "pictogram": 6456,
+    "alts": [
+      2349
+    ]
+  },
+  "bere": {
+    "pictogram": 6061,
+    "alts": [
+      2276
+    ]
+  },
+  "correre": {
+    "pictogram": 6465,
+    "alts": [
+      2719
+    ]
+  },
+  "saltare": {
+    "pictogram": 39052,
+    "alts": [
+      2804
+    ]
+  },
+  "spingere": {
+    "pictogram": 6485,
+    "alts": [
+      4638
+    ]
+  },
+  "tirare": {
+    "pictogram": 6543,
+    "alts": [
+      6542
+    ]
+  },
+  "aprire": {
+    "pictogram": 24825,
+    "alts": [
+      2637
+    ]
+  },
+  "versare": {
+    "pictogram": 5982,
+    "alts": [
+      27746
+    ]
+  },
+  "costruire": {
+    "pictogram": 2713,
+    "alts": [
+      25988
+    ]
+  },
+  "rompere": {
+    "pictogram": 6604,
+    "alts": [
+      4735
+    ]
+  },
+  "dormire": {
+    "pictogram": 6479,
+    "alts": [
+      2369
+    ]
+  },
+  "lavarsi": {
+    "pictogram": 2271,
+    "alts": [
+      38230
+    ]
+  },
+  "leggere": {
+    "pictogram": 7141,
+    "alts": [
+      2447
+    ]
+  },
+  "scrivere": {
+    "pictogram": 2380,
+    "alts": []
+  },
+  "parlare": {
+    "pictogram": 9693,
+    "alts": [
+      3345
+    ]
+  },
+  "giocare": {
+    "pictogram": 23392,
+    "alts": [
+      2439
+    ]
+  },
+  "cucinare": {
+    "pictogram": 30526,
+    "alts": [
+      2342
+    ]
+  },
+  "camminare": {
+    "pictogram": 29951,
+    "alts": [
+      3251
+    ]
+  },
+  "nuotare": {
+    "pictogram": 6568,
+    "alts": [
+      24903
+    ]
+  },
+  "ridere": {
+    "pictogram": 13354,
+    "alts": []
+  },
+  "grande": {
+    "pictogram": 4658,
+    "alts": [
+      10272
+    ]
+  },
+  "piccolo": {
+    "pictogram": 4716,
+    "alts": [
+      36887
+    ]
+  },
+  "caldo": {
+    "pictogram": 4583,
+    "alts": [
+      26716
+    ]
+  },
+  "freddo": {
+    "pictogram": 4652,
+    "alts": [
+      26865
+    ]
+  },
+  "morbido": {
+    "pictogram": 4578,
+    "alts": []
+  },
+  "duro": {
+    "pictogram": 4637,
+    "alts": []
+  },
+  "veloce": {
+    "pictogram": 5306,
+    "alts": []
+  },
+  "lento": {
+    "pictogram": 4676,
+    "alts": []
+  },
+  "felice": {
+    "pictogram": 35547,
+    "alts": [
+      9907
+    ]
+  },
+  "triste": {
+    "pictogram": 35545,
+    "alts": [
+      2606
+    ]
+  },
+  "pulito": {
+    "pictogram": 26172,
+    "alts": [
+      4680
+    ]
+  },
+  "sporco": {
+    "pictogram": 4750,
+    "alts": [
+      26459
+    ]
+  },
+  "pieno": {
+    "pictogram": 26176,
+    "alts": [
+      4688
+    ]
+  },
+  "vuoto": {
+    "pictogram": 26527,
+    "alts": [
+      4767
+    ]
+  },
+  "lungo": {
+    "pictogram": 4675,
+    "alts": []
+  },
+  "corto": {
+    "pictogram": 4615,
+    "alts": []
+  },
+  "pesante": {
+    "pictogram": 27025,
+    "alts": []
+  },
+  "leggero": {
+    "pictogram": 4679,
+    "alts": [
+      26889
+    ]
+  },
+  "dentro": {
+    "pictogram": 5439,
+    "alts": [
+      5514
+    ]
+  },
+  "fuori": {
+    "pictogram": 5475,
+    "alts": [
+      29879
+    ]
+  },
+  "sopra": {
+    "pictogram": 7814,
+    "alts": []
+  },
+  "sotto": {
+    "pictogram": 5355,
+    "alts": []
+  },
+  "davanti": {
+    "pictogram": 34657,
+    "alts": [
+      7044
+    ]
+  },
+  "dietro": {
+    "pictogram": 5443,
+    "alts": [
+      7818
+    ]
+  },
+  "vicino": {
+    "pictogram": 30383,
+    "alts": [
+      6241
+    ]
+  },
+  "lontano": {
+    "pictogram": 30385,
+    "alts": [
+      36759
+    ]
+  },
+  "tra": {
+    "pictogram": 7765,
+    "alts": [
+      39733
+    ]
+  },
+  "accanto": {
+    "pictogram": 5367,
+    "alts": []
+  },
+  "intorno": {
+    "pictogram": 5376,
+    "alts": [
+      29240
+    ]
+  },
+  "in_mezzo": {
+    "pictogram": 5449,
+    "alts": [
+      39393
+    ]
+  },
+  "prima": {
+    "pictogram": 32745,
+    "alts": [
+      10210
+    ]
+  },
+  "dopo": {
+    "pictogram": 32749,
+    "alts": [
+      13080
+    ]
+  },
+  "adesso": {
+    "pictogram": 32747,
+    "alts": [
+      13026
+    ]
+  },
+  "ieri": {
+    "pictogram": 38279,
+    "alts": []
+  },
+  "oggi": {
+    "pictogram": 7131,
+    "alts": []
+  },
+  "domani": {
+    "pictogram": 38278,
+    "alts": []
+  },
+  "mattina": {
+    "pictogram": 25704,
+    "alts": [
+      28207
+    ]
+  },
+  "pomeriggio": {
+    "pictogram": 7268,
+    "alts": [
+      39332
+    ]
+  },
+  "sera": {
+    "pictogram": 39365,
+    "alts": [
+      39393
+    ]
+  },
+  "notte": {
+    "pictogram": 26997,
+    "alts": [
+      35789
+    ]
+  },
+  "amicizia": {
+    "pictogram": 8488,
+    "alts": []
+  },
+  "paura": {
+    "pictogram": 10261,
+    "alts": [
+      35571
+    ]
+  },
+  "rabbia": {
+    "pictogram": 35567,
+    "alts": []
+  },
+  "sogno": {
+    "pictogram": 5590,
+    "alts": [
+      38001
+    ]
+  },
+  "idea": {
+    "pictogram": 6019,
+    "alts": [
+      6531
+    ]
+  },
+  "aiuto": {
+    "pictogram": 12252,
+    "alts": [
+      19524
+    ]
+  },
+  "regalo": {
+    "pictogram": 25381,
+    "alts": [
+      3149
+    ]
+  },
+  "festa": {
+    "pictogram": 16649,
+    "alts": [
+      6969
+    ]
+  },
+  "quadrato": {
+    "pictogram": 36389,
+    "alts": []
+  },
+  "rettangolo": {
+    "pictogram": 36389,
+    "alts": []
+  },
+  "gioia": {
+    "pictogram": 35547,
+    "alts": [
+      3245
+    ]
+  },
+  "ricordo": {
+    "pictogram": 9157,
+    "alts": [
+      24679
+    ]
+  },
+  "dito": {
+    "pictogram": 3298,
+    "alts": [
+      16609
+    ]
+  },
+  "viso": {
+    "pictogram": 2684,
+    "alts": [
+      34777
+    ]
+  },
+  "stetoscopio": {
+    "pictogram": 6000,
+    "alts": []
+  },
+  "lavagna": {
+    "pictogram": 2526,
+    "alts": [
+      30512
+    ]
+  },
+  "carrello": {
+    "pictogram": 5948,
+    "alts": [
+      30618
+    ]
+  },
+  "porta": {
+    "pictogram": 3244,
+    "alts": [
+      24022
+    ]
+  },
+  "finestra": {
+    "pictogram": 2611,
+    "alts": [
+      37811
+    ]
+  },
+  "pianta": {
+    "pictogram": 3143,
+    "alts": [
+      32738
+    ]
+  },
+  "ramo": {
+    "pictogram": 7224,
+    "alts": [
+      32292
+    ]
+  },
+  "radice": {
+    "pictogram": 3148,
+    "alts": []
+  },
+  "cielo": {
+    "pictogram": 6978,
+    "alts": []
+  },
+  "capra": {
+    "pictogram": 25887,
+    "alts": []
+  },
+  "scatola": {
+    "pictogram": 5935,
+    "alts": []
+  },
+  "coperchio": {
+    "pictogram": 27395,
+    "alts": []
+  },
+  "caa-voglio": {
+    "pictogram": 5441,
+    "alts": [
+      32753
+    ]
+  },
+  "caa-basta": {
+    "pictogram": 28429,
+    "alts": []
+  },
+  "caa-non-so": {
+    "pictogram": 11696,
+    "alts": [
+      35575
+    ]
+  },
+  "caa-non-voglio": {
+    "pictogram": 21587,
+    "alts": [
+      29129
+    ]
+  },
+  "caa-ancora": {
+    "pictogram": 6043,
+    "alts": [
+      37162
+    ]
+  },
+  "caa-aiuto": {
+    "pictogram": 12252,
+    "alts": [
+      19524
+    ]
+  },
+  "caa-mi-piace": {
+    "pictogram": 37826,
+    "alts": [
+      21917
+    ]
+  },
+  "caa-non-mi-piace": {
+    "pictogram": 37825,
+    "alts": [
+      22005
+    ]
+  },
+  "caa-ripeti": {
+    "pictogram": 11752,
+    "alts": []
+  },
+  "mare": {
+    "pictogram": 2925,
+    "alts": [
+      30492
+    ]
+  },
+  "bosco": {
+    "pictogram": 2666,
+    "alts": [
+      32462
+    ]
+  },
+  "montagna": {
+    "pictogram": 2909,
+    "alts": [
+      25912
+    ]
+  },
+  "carne": {
+    "pictogram": 2316,
+    "alts": [
+      28223
+    ]
+  },
+  "ala": {
+    "pictogram": 5368,
+    "alts": [
+      6890
+    ]
+  },
+  "coda": {
+    "pictogram": 2338,
+    "alts": []
+  },
+  "citta": {
+    "pictogram": 14763,
+    "alts": []
+  },
+  "fattoria": {
+    "pictogram": 32482,
+    "alts": [
+      3337
+    ]
+  },
+  "spiaggia": {
+    "pictogram": 30518,
+    "alts": [
+      2826
+    ]
+  },
+  "tazza": {
+    "pictogram": 2582,
+    "alts": []
+  },
+  "forno": {
+    "pictogram": 2426,
+    "alts": []
+  },
+  "casco": {
+    "pictogram": 2691,
+    "alts": [
+      39563
+    ]
+  },
+  "cintura": {
+    "pictogram": 2336,
+    "alts": [
+      37299
+    ]
+  },
+  "legno": {
+    "pictogram": 6143,
+    "alts": []
+  },
+  "carta": {
+    "pictogram": 38792,
+    "alts": []
+  },
+  "farina": {
+    "pictogram": 8600,
+    "alts": []
+  },
+  "chiudere": {
+    "pictogram": 24976,
+    "alts": [
+      2697
+    ]
+  },
+  "piangere": {
+    "pictogram": 7147,
+    "alts": [
+      3239
+    ]
+  },
+  "ascoltare": {
+    "pictogram": 6572,
+    "alts": [
+      2381
+    ]
+  },
+  "rumoroso": {
+    "pictogram": 7157,
+    "alts": [
+      36047
+    ]
+  },
+  "silenzioso": {
+    "pictogram": 38050,
+    "alts": []
+  },
+  "negozio": {
+    "pictogram": 35695,
+    "alts": [
+      34137
+    ]
+  },
+  "guardare": {
+    "pictogram": 6564,
+    "alts": [
+      2474
+    ]
+  },
+  "iniziare": {
+    "pictogram": 5431,
+    "alts": []
+  },
+  "bello": {
+    "pictogram": 26114,
+    "alts": [
+      4660
+    ]
+  },
+  "difficile": {
+    "pictogram": 4629,
+    "alts": [
+      32436
+    ]
+  }
+}

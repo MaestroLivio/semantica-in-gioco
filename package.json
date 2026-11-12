@@ -1,0 +1,138 @@
+{
+  "name": "semantica-in-gioco",
+  "private": true,
+  "version": "1.2.0",
+  "type": "module",
+  "description": "Semantica in Gioco - ambiente educativo per lo sviluppo della competenza lessicale e semantica",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build:web": "tsc -b && SEMANTICA_WEB=1 SEMANTICA_SKIP_TTS_ASSETS=1 vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -b --noEmit false --emitDeclarationOnly false",
+    "e2e": "playwright test",
+    "stimuli": "node scripts/fetch-pictograms.mjs",
+    "icons": "node scripts/make-icons.mjs",
+    "start:desktop": "npm run build && electron .",
+    "pack:pwa": "npm run build && node scripts/make-pwa-archive.mjs",
+    "dist": "npm run build && electron-builder",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "dist:all": "npm run build && electron-builder --mac --win --linux"
+  },
+  "dependencies": {
+    "piper-tts-web": "^1.1.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.2",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vitest": "^2.1.4"
+  },
+  "author": "Semantica in Gioco <info@semanticaingioco.example>",
+  "main": "electron/main.cjs",
+  "build": {
+    "appId": "it.semanticaingioco.app",
+    "productName": "Semantica in Gioco",
+    "copyright": "Semantica in Gioco - strumento educativo non commerciale",
+    "asar": true,
+    "compression": "normal",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "artifactName": "semantica-in-gioco-${version}-${os}-${arch}.${ext}",
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.education",
+      "icon": "build/icon.png",
+      "identity": null,
+      "hardenedRuntime": false,
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ]
+    },
+    "dmg": {
+      "title": "Semantica in Gioco ${version}",
+      "backgroundColor": "#f6f2e9",
+      "contents": [
+        {
+          "x": 140,
+          "y": 200,
+          "type": "file"
+        },
+        {
+          "x": 400,
+          "y": 200,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "icon": "build/icon.png",
+      "signAndEditExecutable": true,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Semantica in Gioco",
+      "artifactName": "semantica-in-gioco-${version}-windows-${arch}-installer.${ext}"
+    },
+    "linux": {
+      "icon": "build/icon.png",
+      "category": "Education",
+      "maintainer": "Semantica in Gioco <info@semanticaingioco.example>",
+      "synopsis": "Ambiente educativo per la competenza lessicale e semantica",
+      "target": [
+        "AppImage",
+        "deb",
+        "tar.gz"
+      ]
+    }
+  },
+  "homepage": "https://semanticaingioco.example"
+}
