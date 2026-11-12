@@ -10,6 +10,7 @@
 // nuovo prima di creare il pacchetto, così non entrano nel DMG o nell'EXE.
 const fs = require('node:fs')
 const path = require('node:path')
+const { execFileSync } = require('node:child_process')
 
 function isJunk(name) {
   return name.startsWith('._') || name === '.DS_Store'
@@ -39,11 +40,31 @@ function strip(dir) {
   return removed
 }
 
+// macOS rifiuta con "danneggiato" un bundle arm64 con la sola firma del linker
+// (`Sealed Resources=none`). Con `identity: null` electron-builder non firma,
+// quindi la firma ad-hoc va applicata qui, dopo ogni modifica al bundle.
+function adhocSign(context) {
+  if (process.platform !== 'darwin') return
+  const product = context.packager?.appInfo?.productFilename
+  if (!product) return
+  const appPath = path.join(context.appOutDir, `${product}.app`)
+  if (!fs.existsSync(appPath)) return // fase afterExtract: c'è ancora Electron.app
+  try {
+    execFileSync('xattr', ['-cr', appPath], { stdio: 'ignore' })
+  } catch {
+    // Nessun attributo da rimuovere.
+  }
+  execFileSync('codesign', ['--force', '--deep', '--sign', '-', appPath], { stdio: 'inherit' })
+  execFileSync('codesign', ['--verify', '--deep', '--strict', appPath], { stdio: 'inherit' })
+  console.log(`  • firma ad-hoc applicata a ${appPath}`)
+}
+
 async function hook(context) {
   const removed = strip(context.appOutDir)
   if (removed > 0) {
     console.log(`  • rimossi ${removed} file AppleDouble da ${context.appOutDir}`)
   }
+  adhocSign(context)
 }
 
 module.exports = hook

@@ -96,7 +96,7 @@ npm run dist:linux      # AppImage, deb, tar.gz per arm64 e x64
 npm run pack:pwa        # archivio della build per hosting HTTPS (ChromeOS)
 ```
 
-I pacchetti non sono firmati digitalmente: macOS e Windows mostrano un avviso al primo avvio. L'aggiornamento automatico dalle release GitHub è descritto sopra.
+I pacchetti non sono firmati con un certificato di sviluppatore né notarizzati: macOS e Windows mostrano un avviso al primo avvio. Il bundle macOS riceve però una **firma ad-hoc** (`codesign --sign -`, applicata dall'hook `scripts/strip-appledouble.cjs`): senza di essa macOS lo rifiuta come «danneggiato». Va copiato in *Applicazioni* prima di aprirlo, non avviato dal DMG o da un volume esterno. L'aggiornamento automatico dalle release GitHub è descritto sopra.
 
 ## Dati e privacy
 

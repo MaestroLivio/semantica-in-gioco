@@ -4,7 +4,7 @@ L'app nasce come PWA e viene distribuita anche come applicazione desktop autonom
 
 **Download:** <https://github.com/MaestroLivio/semantica-in-gioco/releases>. La release 1.2.0 contiene gli installer macOS Apple Silicon (`arm64`) e Intel (`x64`), l'installer Windows x64 e l'archivio della build web. Linux si genera da sorgente con i comandi in fondo.
 
-Nessun installer è firmato digitalmente: non ci sono certificati di code signing in questo progetto. Questo è il motivo degli avvisi di sistema descritti sotto; non indica un file corrotto.
+Nessun installer è firmato con un certificato di sviluppatore: non ci sono certificati di code signing in questo progetto. Il bundle macOS riceve una **firma ad-hoc**, che è ciò che permette di avviarlo su Apple Silicon; gli avvisi di Gatekeeper restano perché l'app non è notarizzata. Non indica un file corrotto.
 
 ## Riepilogo dei file della release 1.2.0
 
@@ -33,8 +33,12 @@ L'app desktop controlla le release GitHub a ogni avvio. Se trova una versione pi
 
 1. Apri il DMG `arm64` (Apple Silicon).
 2. Trascina **Semantica in Gioco** nella cartella *Applicazioni*.
-3. Al primo avvio macOS blocca l'app non firmata. Apri *Impostazioni di Sistema → Privacy e sicurezza*, scorri fino al messaggio su Semantica in Gioco e scegli **Apri comunque**; in alternativa tasto destro sull'app → *Apri* → *Apri*.
-4. Se l'app resta bloccata da Gatekeeper: `xattr -dr com.apple.quarantine "/Applications/Semantica in Gioco.app"`.
+3. **Copia l'app in *Applicazioni* prima di aprirla.** Aprire il bundle direttamente dal DMG o da una chiavetta ExFAT può rompere la firma e produrre l'errore «danneggiato».
+4. Al primo avvio macOS blocca l'app non notarizzata: *Impostazioni di Sistema → Privacy e sicurezza*, scorri fino al messaggio su Semantica in Gioco e scegli **Apri comunque**; in alternativa tasto destro sull'app → *Apri* → *Apri*.
+5. Se compare ancora «danneggiato», succede quando la firma ad-hoc non è più valida (copia parziale, modifica del bundle, esecuzione da un volume esterno). Reinstalla copiando l'app dal DMG e, solo se serve, rimuovi l'attributo di quarantena:
+   ```bash
+   xattr -dr com.apple.quarantine "/Applications/Semantica in Gioco.app"
+   ```
 
 Requisiti: macOS 10.15 o successivo su Apple Silicon. I dati restano nel contenitore dell'app (`~/Library/Application Support/Semantica in Gioco`) e sono separati da quelli del browser.
 
