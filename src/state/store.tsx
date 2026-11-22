@@ -40,6 +40,8 @@ export interface RecordingRecord {
   label: string
   blob: Blob
   createdAt: number
+  /** Profilo a cui appartiene la registrazione (le voci precedenti possono non averlo). */
+  profileId?: string
 }
 
 export interface SessionSummary {
@@ -216,13 +218,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       setNotes((prev) => prev.filter((n) => n.profileId !== id))
       setCustomConcepts((prev) => prev.filter((c) => c.profileId !== id))
       setSessions((prev) => prev.filter((s) => s.profileId !== id))
-      void db.remove('profiles', id)
-      for (const attempt of attempts.filter((a) => (a as Attempt & { profileId?: string }).profileId === id)) {
-        void db.remove('attempts', attempt.id)
-      }
+      setRecordings((prev) => prev.filter((r) => r.profileId !== id))
+      // Una sola transazione elimina anche note, contenuti, sessioni e
+      // registrazioni: nessun dato orfano deve restare nel database.
+      void db.deleteProfileData(id)
       if (activeProfileId === id) setActiveProfileId(null)
     },
-    [attempts, activeProfileId],
+    [activeProfileId],
   )
 
   const recordAttempt = useCallback(
@@ -261,11 +263,17 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const addRecording = useCallback((label: string, blob: Blob) => {
-    const record: RecordingRecord = { id: uid('rec'), label, blob, createdAt: Date.now() }
+    const record: RecordingRecord = {
+      id: uid('rec'),
+      label,
+      blob,
+      createdAt: Date.now(),
+      ...(activeProfile ? { profileId: activeProfile.id } : {}),
+    }
     setRecordings((prev) => [record, ...prev])
     void db.put('recordings', record)
     return record
-  }, [])
+  }, [activeProfile])
 
   const deleteRecording = useCallback((id: string) => {
     setRecordings((prev) => prev.filter((r) => r.id !== id))
@@ -289,7 +297,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const importData = useCallback(async (json: string) => {
     const result = await db.importDatabase(json)
-    const [loadedProfiles, loadedAttempts, loadedNotes, loadedCustom, loadedSessions, loadedRecordings] =
+    const [loadedProfiles, loadedAttempts, loadedNotes, loadedCustom, loadedSessions, loadedRecordings, meta] =
       await Promise.all([
         db.getAll<ChildProfile>('profiles'),
         db.getAll<Attempt>('attempts'),
@@ -297,13 +305,20 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         db.getAll<CustomConceptRecord>('customConcepts'),
         db.getAll<SessionSummary>('sessions'),
         db.getAll<RecordingRecord>('recordings'),
+        db.getAll<{ key: string; value: unknown }>('meta'),
       ])
-    setProfiles(loadedProfiles.sort((a, b) => a.createdAt - b.createdAt))
+    setProfiles(loadedProfiles.map((profile) => withProfileDefaults(profile)).sort((a, b) => a.createdAt - b.createdAt))
     setAttempts(loadedAttempts)
     setNotes(loadedNotes)
     setCustomConcepts(loadedCustom)
     setSessions(loadedSessions)
     setRecordings(loadedRecordings)
+    const savedGlobal = meta.find((entry) => entry.key === 'global')?.value as GlobalSettings | undefined
+    const nextGlobal = { ...DEFAULT_GLOBAL, ...(savedGlobal ?? {}) }
+    setGlobal(nextGlobal)
+    if (nextGlobal.lastProfileId && loadedProfiles.some((profile) => profile.id === nextGlobal.lastProfileId)) {
+      setActiveProfileId(nextGlobal.lastProfileId)
+    }
     return result
   }, [])
 
@@ -329,7 +344,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     notes: activeProfile ? notes.filter((n) => n.profileId === activeProfile.id) : [],
     customConcepts: activeProfile ? customConcepts.filter((c) => c.profileId === activeProfile.id) : [],
     sessions: activeProfile ? sessions.filter((s) => s.profileId === activeProfile.id) : [],
-    recordings,
+    // Le registrazioni precedenti non hanno profileId: restano visibili come
+    // libreria condivisa, mentre quelle nuove sono legate al profilo attivo.
+    recordings: activeProfile
+      ? recordings.filter((r) => !r.profileId || r.profileId === activeProfile.id)
+      : recordings,
     global,
     stats,
     selectProfile,

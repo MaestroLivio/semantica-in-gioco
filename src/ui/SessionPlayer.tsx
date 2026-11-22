@@ -134,12 +134,12 @@ export function ExerciseView({ exercise, profile, index, total, onResolved, onSk
    * giudizio. Nella pratica autonoma non si tolgono alternative: si toglie
    * solo la difficoltà di troppo, e solo nella pratica guidata.
    */
-  const failWith = (next: ErrorAnalysis) => {
+  const failWith = (next: ErrorAnalysis, options: { record?: boolean } = {}) => {
     attemptsRef.current += 1
     setTries((t) => t + 1)
     setAnalysis(next)
     setOutcome('retry')
-    if (!recorded.current) {
+    if (options.record !== false && !recorded.current) {
       record({ correct: false, usedHint: attemptsRef.current > 1 || hint > 0, hintLevel: hint, modality: profile.scanMode ? 'keyboard' : 'tap' })
     }
     if (profile.autoAudio) {
@@ -552,7 +552,9 @@ export function ExerciseView({ exercise, profile, index, total, onResolved, onSk
       setPendingLeft(null)
       const expected = pairs.find((p) => p.left.id === pendingLeft)?.right.id
       if (expected !== rightId) {
-        failWith(analysePair(exercise, pendingLeft, rightId))
+        // L'abbinamento esplorativo non è ancora un tentativo concluso:
+        // mostriamo il feedback subito, ma registriamo l'errore solo alla conferma.
+        failWith(analysePair(exercise, pendingLeft, rightId), { record: false })
       }
     }
     const all = pairs.length > 0 && pairs.every((p) => mapping[p.left.id])
@@ -1097,7 +1099,7 @@ export function SessionSummaryView({
     sessions: activeProfile?.masterySessions ?? 2,
     kinds: activeProfile?.masteryKinds ?? 3,
     accuracy: activeProfile?.masteryAccuracy ?? 0.75,
-    independent: 3,
+    independent: activeProfile?.masteryIndependent ?? 3,
   }
   const sessionStats = result.concepts
     .map((id) => stats.get(id))

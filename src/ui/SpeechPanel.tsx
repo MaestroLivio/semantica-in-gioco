@@ -68,6 +68,7 @@ export function SpeechPanel() {
     const ok = await prepareSpeech('neural')
     setInstalled(neuralInstalled())
     setBusy(false)
+    if (ok) set('ttsEngine', 'neural')
     setNotice(ok ? t('voice.installOk') : t('voice.installKo'))
     refreshCache()
   }

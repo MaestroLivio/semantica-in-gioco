@@ -75,10 +75,47 @@ export function clearStore(store: StoreName): Promise<undefined> {
   return tx<undefined>(store, 'readwrite', (os) => os.clear())
 }
 
+export async function blobToDataUrl(blob: Blob): Promise<string> {
+  const bytes = new Uint8Array(await blob.arrayBuffer())
+  let binary = ''
+  // A chunked conversion avoids "too many arguments" on large recordings.
+  const chunk = 0x8000
+  for (let index = 0; index < bytes.length; index += chunk) {
+    binary += String.fromCharCode(...bytes.subarray(index, index + chunk))
+  }
+  return `data:${blob.type || 'application/octet-stream'};base64,${btoa(binary)}`
+}
+
+export function dataUrlToBlob(value: string): Blob {
+  const match = /^data:([^;,]+)?(?:;base64)?,(.*)$/s.exec(value)
+  if (!match) return new Blob([value])
+  const type = match[1] || 'application/octet-stream'
+  const binary = atob(match[2] ?? '')
+  const bytes = new Uint8Array(binary.length)
+  for (let index = 0; index < binary.length; index++) bytes[index] = binary.charCodeAt(index)
+  return new Blob([bytes], { type })
+}
+
+/** Serializza i Blob (registrazioni) per il backup JSON senza perderli. */
+async function exportableRow(store: StoreName, row: unknown): Promise<unknown> {
+  if (store !== 'recordings' || !row || typeof row !== 'object') return row
+  const record = row as { blob?: unknown }
+  if (!(record.blob instanceof Blob)) return row
+  return { ...record, blob: await blobToDataUrl(record.blob) }
+}
+
+function importableRow(store: StoreName, row: unknown): unknown {
+  if (store !== 'recordings' || !row || typeof row !== 'object') return row
+  const record = row as { blob?: unknown }
+  if (typeof record.blob !== 'string') return row
+  return { ...record, blob: dataUrlToBlob(record.blob) }
+}
+
 export async function exportDatabase(): Promise<string> {
   const data: Record<string, unknown[]> = {}
   for (const store of STORES) {
-    data[store.name] = await getAll(store.name)
+    const rows = await getAll<unknown>(store.name)
+    data[store.name] = await Promise.all(rows.map((row) => exportableRow(store.name, row)))
   }
   return JSON.stringify({ app: 'semantica-in-gioco', version: DB_VERSION, exportedAt: new Date().toISOString(), data }, null, 2)
 }
@@ -102,7 +139,7 @@ export async function importDatabase(json: string): Promise<{ imported: number; 
     if (!Array.isArray(rows)) continue
     for (const row of rows) {
       try {
-        await put(store.name, row)
+        await put(store.name, importableRow(store.name, row))
         imported++
       } catch {
         skipped.push(`${store.name}: voce non importabile`)
@@ -110,6 +147,32 @@ export async function importDatabase(json: string): Promise<{ imported: number; 
     }
   }
   return { imported, skipped }
+}
+
+/**
+ * Cancellazione completa dei dati di un profilo in una sola transazione.
+ * Include note, contenuti personalizzati, sessioni e registrazioni collegate:
+ * non devono restare voci orfane nel database.
+ */
+export async function deleteProfileData(profileId: string): Promise<void> {
+  const db = await openDb()
+  const names: StoreName[] = ['profiles', 'attempts', 'notes', 'customConcepts', 'sessions', 'recordings']
+  await new Promise<void>((resolve, reject) => {
+    const transaction = db.transaction(names, 'readwrite')
+    transaction.objectStore('profiles').delete(profileId)
+    for (const name of ['attempts', 'notes', 'customConcepts', 'sessions', 'recordings'] as StoreName[]) {
+      const objectStore = transaction.objectStore(name)
+      const request = objectStore.getAll()
+      request.onsuccess = () => {
+        for (const row of request.result as { id?: string; profileId?: string }[]) {
+          if (row.profileId === profileId && row.id) objectStore.delete(row.id)
+        }
+      }
+    }
+    transaction.oncomplete = () => resolve()
+    transaction.onerror = () => reject(transaction.error ?? new Error('Cancellazione del profilo non riuscita'))
+    transaction.onabort = () => reject(transaction.error ?? new Error('Cancellazione del profilo annullata'))
+  })
 }
 
 /** Cancellazione effettiva di tutti i dati locali. */

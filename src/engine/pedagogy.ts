@@ -532,7 +532,9 @@ export function nextStepRecommendation(
       why: `${ids.length === 1 ? 'Una parola ha' : `${ids.length} parole hanno`} avuto un errore recente: un breve ripasso ravvicinato è più utile di un esercizio nuovo.`,
       conceptIds: ids,
       moduleIds: modules.length ? modules : ['m1', 'm2', 'm5'],
-      level: 2,
+      // Non si abbassa il livello per principio: si riparte dal livello
+      // suggerito dalle prestazioni reali del concetto in difficoltà.
+      level: struggling[0] ? suggestLevel(struggling[0], 2) : 2,
       mode: 'ripasso',
     }
   }

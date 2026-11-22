@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Typecheck
+        run: npx tsc -b
+      - name: Unit tests
+        run: npm test
+      - name: Web build
+        run: npm run build:web
+      - name: Check macOS metadata files
+        run: |
+          if find . -name '._*' -not -path './node_modules/*' -not -path './.git/*' | grep -q .; then
+            echo 'File AppleDouble trovati nel repository.' >&2
+            exit 1
+          fi

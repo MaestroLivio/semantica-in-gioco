@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useStore, reviewItemsFromStats } from '../../state/store'
-import { MODULES, moduleGoalIn, moduleTitleIn } from '../../data/modules'
+import { MODULES, moduleTitleIn } from '../../data/modules'
 import { ENVIRONMENTS } from '../../data/environments'
 import { STORIES } from '../../data/stories'
 import { SEMANTIC_MAPS } from '../../data/maps'
@@ -18,17 +18,14 @@ import { WordCard } from '../WordCard'
 import type { Navigate } from '../routes'
 import { useI18n } from '../../i18n'
 
-function coverImage(conceptId?: string): string | undefined {
-  const concept = CONCEPT_BY_ID.get(conceptId ?? '')
-  return concept ? primaryImage(concept) : undefined
-}
-
 export function ChildHome({ onNavigate }: { onNavigate: Navigate }) {
   const { activeProfile, stats, sessions } = useStore()
   const { t, language } = useI18n()
   const [moduleForLevel, setModuleForLevel] = useState<string | null>(null)
   const [level, setLevel] = useState<Level>(2)
   const [wordOfDayOpen, setWordOfDayOpen] = useState(false)
+  // Menu a gruppi: una sola area aperta per volta, così la home resta corta.
+  const [openGroup, setOpenGroup] = useState<'words' | 'relations' | 'labs' | 'world'>('words')
 
   const dueList = useMemo(() => {
     if (!activeProfile) return []
@@ -44,7 +41,7 @@ export function ChildHome({ onNavigate }: { onNavigate: Navigate }) {
             sessions: activeProfile.masterySessions,
             kinds: activeProfile.masteryKinds,
             accuracy: activeProfile.masteryAccuracy,
-            independent: 3,
+            independent: activeProfile.masteryIndependent,
           })
         : null,
     [activeProfile, stats],
@@ -239,143 +236,183 @@ export function ChildHome({ onNavigate }: { onNavigate: Navigate }) {
         </Card>
       )}
 
-      <section aria-labelledby="modules-title" className="section">
+      <section aria-labelledby="menu-title" className="section">
         <div className="section__head">
-          <h2 id="modules-title">{t('child.activities.title')}</h2>
-          <p className="muted">{t('child.activities.note')}</p>
+          <h2 id="menu-title">{t('child.menu.title')}</h2>
+          <p className="muted">{t('child.menu.note')}</p>
         </div>
-        <div className="module-grid">
-          {MODULES.map((module) => {
-            const mStats = moduleStats(module.id)
-            const consolidati = mStats.filter((s) => statusOf(s) === 'consolidato').length
-            const title = moduleTitleIn(module, language)
-            return (
-              <Card key={module.id} as="article" className="module-card">
-                <span className="module-card__number" aria-hidden="true">
-                  {module.number}
-                </span>
-                <div className="heading-with-speak">
-                  <h3>{title}</h3>
-                  <SpeakInline
-                    text={`${title}. ${moduleGoalIn(module, language)}`}
-                    rate={activeProfile.ttsRate}
-                    volume={activeProfile.ttsVolume}
-                    label={t('child.module.listen', { title })}
-                  />
-                </div>
-                <p className="module-card__goal">{moduleGoalIn(module, language)}</p>
-                <p className="module-card__meta">
-                  {t('child.module.levels', {
-                    from: module.levels[0],
-                    to: module.levels[module.levels.length - 1],
-                  })}
-                  {mStats.length > 0 ? t('child.module.consolidated', { count: consolidati }) : ''}
-                </p>
-                <Btn
-                  variant="primary"
-                  size="md"
-                  onClick={() => {
-                    setModuleForLevel(module.id)
-                    setLevel(module.levels[0])
-                  }}
-                  ariaLabel={t('child.module.startAria', { title })}
-                >
-                  {t('child.module.play')}
-                </Btn>
-              </Card>
-            )
-          })}
-        </div>
-      </section>
-
-      <section aria-labelledby="worlds-title" className="section">
-        <div className="section__head">
-          <h2 id="worlds-title">{t('child.env.title')}</h2>
-          <p className="muted">{t('child.env.note')}</p>
-        </div>
-        <div className="env-grid">
-          {ENVIRONMENTS.map((env) => (
+        <div className="menu-grid">
+          <Card className="menu-group">
             <button
-              key={env.id}
               type="button"
-              className="env-card"
-              onClick={() => {
-                speak(`${env.title}. ${env.description}`, {
-                  rate: activeProfile.ttsRate,
-                  volume: activeProfile.ttsVolume,
-                })
-                onNavigate({ name: 'explore', envId: env.id })
-              }}
+              className="menu-group__head"
+              aria-expanded={openGroup === 'words'}
+              aria-controls="menu-words"
+              onClick={() => setOpenGroup(openGroup === 'words' ? 'relations' : 'words')}
             >
-              <span className="env-card__title">{env.title}</span>
-              <span className="env-card__desc">{env.description}</span>
-              <span className="env-card__words">
-                {env.words.slice(0, 5).map((word) => (
-                  <span key={word} className="word-chip word-chip--small">
-                    {CONCEPT_BY_ID.get(word)?.lemma ?? word}
-                  </span>
-                ))}
-              </span>
+              <div>
+                <h3>{t('child.menu.words.title')}</h3>
+                <p className="muted">{t('child.menu.words.note')}</p>
+              </div>
+              <span className="menu-group__count">{MODULES.filter((m) => m.number <= 8).length}</span>
             </button>
-          ))}
-        </div>
-      </section>
-
-      <section aria-labelledby="labs-title" className="section">
-        <div className="section__head">
-          <h2 id="labs-title">{t('child.labs.title')}</h2>
-          <p className="muted">{t('child.labs.note')}</p>
-        </div>
-        <div className="lab-grid">
-          <Card className="lab-card">
-            <div className="heading-with-speak">
-              <h3>{t('child.stories.title')}</h3>
-              <SpeakInline
-                text={`${t('child.stories.title')}. ${t('child.stories.body', { count: STORIES.length })}`}
-                rate={activeProfile.ttsRate}
-                volume={activeProfile.ttsVolume}
-                label={t('child.stories.listen')}
-              />
-            </div>
-            <p>{t('child.stories.body', { count: STORIES.length })}</p>
-            <div className="lab-card__preview">
-              {STORIES.slice(0, 3).map((story) => (
-                <Picture
-                  key={story.id}
-                  src={coverImage(story.reuse[0] ?? story.keyWords[0])}
-                  alt={story.title}
-                  label={story.title}
-                  showLabel
-                  size="sm"
-                  className="story-thumb"
-                />
-              ))}
-            </div>
-            <Btn variant="secondary" onClick={() => onNavigate({ name: 'stories' })}>
-              {t('child.stories.open')}
-            </Btn>
+            {openGroup === 'words' && (
+              <div id="menu-words" className="menu-group__body">
+                <ul className="menu-list">
+                  {MODULES.filter((module) => module.number <= 8).map((module) => {
+                    const mStats = moduleStats(module.id)
+                    const consolidati = mStats.filter((s) => statusOf(s) === 'consolidato').length
+                    const title = moduleTitleIn(module, language)
+                    return (
+                      <li key={module.id} className="menu-item">
+                        <span className="menu-item__number" aria-hidden="true">{module.number}</span>
+                        <div className="menu-item__text">
+                          <strong>{title}</strong>
+                          <span className="muted">
+                            {t('child.module.levels', { from: module.levels[0], to: module.levels[module.levels.length - 1] })}
+                            {mStats.length > 0 ? t('child.module.consolidated', { count: consolidati }) : ''}
+                          </span>
+                        </div>
+                        <Btn
+                          variant="secondary"
+                          size="sm"
+                          onClick={() => {
+                            setModuleForLevel(module.id)
+                            setLevel(module.levels[0])
+                          }}
+                          ariaLabel={t('child.module.startAria', { title })}
+                        >
+                          {t('child.module.play')}
+                        </Btn>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            )}
           </Card>
-          <Card className="lab-card">
-            <div className="heading-with-speak">
-              <h3>{t('child.maps.title')}</h3>
-              <SpeakInline
-                text={`${t('child.maps.title')}. ${t('child.maps.body', { count: SEMANTIC_MAPS.length })}`}
-                rate={activeProfile.ttsRate}
-                volume={activeProfile.ttsVolume}
-                label={t('child.maps.listen')}
-              />
-            </div>
-            <p>{t('child.maps.body', { count: SEMANTIC_MAPS.length })}</p>
-            <div className="lab-card__preview">
-              {SEMANTIC_MAPS.slice(0, 3).map((map) => (
-                <span key={map.id} className="word-chip">
-                  {CONCEPT_BY_ID.get(map.central)?.lemma}
-                </span>
-              ))}
-            </div>
-            <Btn variant="secondary" onClick={() => onNavigate({ name: 'maps' })}>
-              {t('child.maps.open')}
-            </Btn>
+
+          <Card className="menu-group">
+            <button
+              type="button"
+              className="menu-group__head"
+              aria-expanded={openGroup === 'relations'}
+              aria-controls="menu-relations"
+              onClick={() => setOpenGroup(openGroup === 'relations' ? 'words' : 'relations')}
+            >
+              <div>
+                <h3>{t('child.menu.relations.title')}</h3>
+                <p className="muted">{t('child.menu.relations.note')}</p>
+              </div>
+              <span className="menu-group__count">{MODULES.filter((m) => m.number >= 9 && m.number <= 18).length}</span>
+            </button>
+            {openGroup === 'relations' && (
+              <div id="menu-relations" className="menu-group__body">
+                <ul className="menu-list">
+                  {MODULES.filter((module) => module.number >= 9 && module.number <= 18).map((module) => {
+                    const mStats = moduleStats(module.id)
+                    const consolidati = mStats.filter((s) => statusOf(s) === 'consolidato').length
+                    const title = moduleTitleIn(module, language)
+                    return (
+                      <li key={module.id} className="menu-item">
+                        <span className="menu-item__number" aria-hidden="true">{module.number}</span>
+                        <div className="menu-item__text">
+                          <strong>{title}</strong>
+                          <span className="muted">
+                            {t('child.module.levels', { from: module.levels[0], to: module.levels[module.levels.length - 1] })}
+                            {mStats.length > 0 ? t('child.module.consolidated', { count: consolidati }) : ''}
+                          </span>
+                        </div>
+                        <Btn
+                          variant="secondary"
+                          size="sm"
+                          onClick={() => {
+                            setModuleForLevel(module.id)
+                            setLevel(module.levels[0])
+                          }}
+                          ariaLabel={t('child.module.startAria', { title })}
+                        >
+                          {t('child.module.play')}
+                        </Btn>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            )}
+          </Card>
+
+          <Card className="menu-group">
+            <button
+              type="button"
+              className="menu-group__head"
+              aria-expanded={openGroup === 'labs'}
+              aria-controls="menu-labs"
+              onClick={() => setOpenGroup(openGroup === 'labs' ? 'words' : 'labs')}
+            >
+              <div>
+                <h3>{t('child.menu.labs.title')}</h3>
+                <p className="muted">{t('child.menu.labs.note')}</p>
+              </div>
+              <span className="menu-group__count">{STORIES.length + SEMANTIC_MAPS.length}</span>
+            </button>
+            {openGroup === 'labs' && (
+              <div id="menu-labs" className="menu-group__body">
+                <div className="menu-links">
+                  <button type="button" className="menu-link-card" onClick={() => onNavigate({ name: 'stories' })}>
+                    <strong>{t('child.stories.title')}</strong>
+                    <span>{t('child.stories.body', { count: STORIES.length })}</span>
+                  </button>
+                  <button type="button" className="menu-link-card" onClick={() => onNavigate({ name: 'maps' })}>
+                    <strong>{t('child.maps.title')}</strong>
+                    <span>{t('child.maps.body', { count: SEMANTIC_MAPS.length })}</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </Card>
+
+          <Card className="menu-group">
+            <button
+              type="button"
+              className="menu-group__head"
+              aria-expanded={openGroup === 'world'}
+              aria-controls="menu-world"
+              onClick={() => setOpenGroup(openGroup === 'world' ? 'words' : 'world')}
+            >
+              <div>
+                <h3>{t('child.menu.world.title')}</h3>
+                <p className="muted">{t('child.menu.world.note')}</p>
+              </div>
+              <span className="menu-group__count">{ENVIRONMENTS.length + 1}</span>
+            </button>
+            {openGroup === 'world' && (
+              <div id="menu-world" className="menu-group__body">
+                <div className="menu-links">
+                  <button type="button" className="menu-link-card" onClick={() => onNavigate({ name: 'atlas' })}>
+                    <strong>{t('child.atlas')}</strong>
+                    <span>{t('child.menu.world.atlas')}</span>
+                  </button>
+                  {ENVIRONMENTS.map((env) => (
+                    <button
+                      key={env.id}
+                      type="button"
+                      className="menu-link-card"
+                      onClick={() => {
+                        speak(`${env.title}. ${env.description}`, {
+                          rate: activeProfile.ttsRate,
+                          volume: activeProfile.ttsVolume,
+                        })
+                        onNavigate({ name: 'explore', envId: env.id })
+                      }}
+                    >
+                      <strong>{env.title}</strong>
+                      <span>{env.description}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </Card>
         </div>
       </section>

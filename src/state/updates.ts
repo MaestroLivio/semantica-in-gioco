@@ -24,6 +24,8 @@ export interface UpdateState {
   platform: string
   arch: string
   canInstall: boolean
+  /** true quando il file scaricato è stato verificato con SHA-256. */
+  checksumVerified?: boolean
 }
 
 interface UpdateBridge {

@@ -17,14 +17,40 @@ import type { Navigate } from '../routes'
 
 type Tab = 'profili' | 'sessione' | 'percorsi' | 'contenuti' | 'progressi' | 'dati'
 
-const TABS: { id: Tab; label: string }[] = [
-  { id: 'profili', label: 'Profili' },
-  { id: 'sessione', label: 'Sessione' },
-  { id: 'percorsi', label: 'Percorsi' },
-  { id: 'contenuti', label: 'Contenuti' },
-  { id: 'progressi', label: 'Progressi' },
-  { id: 'dati', label: 'Dati e report' },
+type TabGroup = {
+  id: string
+  label: string
+  tabs: { id: Tab; label: string }[]
+}
+
+// Menu a due livelli: tre aree principali e, dentro ciascuna, le sezioni
+// operative. Evita di mostrare sei schede equivalenti tutte sullo stesso piano.
+const TAB_GROUPS: TabGroup[] = [
+  {
+    id: 'bambini',
+    label: 'Bambini',
+    tabs: [
+      { id: 'profili', label: 'Profili e impostazioni' },
+      { id: 'progressi', label: 'Progressi e note' },
+    ],
+  },
+  {
+    id: 'didattica',
+    label: 'Didattica',
+    tabs: [
+      { id: 'sessione', label: 'Sessione rapida' },
+      { id: 'percorsi', label: 'Percorsi' },
+      { id: 'contenuti', label: 'Contenuti personali' },
+    ],
+  },
+  {
+    id: 'dati',
+    label: 'Dati e impostazioni',
+    tabs: [{ id: 'dati', label: 'Backup, qualità e sicurezza' }],
+  },
 ]
+
+const ALL_TABS = TAB_GROUPS.flatMap((group) => group.tabs)
 
 async function fileToImage(file: File, maxSize = 512): Promise<string> {
   const dataUrl = await new Promise<string>((resolve, reject) => {
@@ -72,20 +98,40 @@ export function Teacher({ onNavigate }: { onNavigate: Navigate }) {
         </Btn>
       </header>
 
-      <nav className="tabs" role="tablist" aria-label="Sezioni dell'area adulti">
-        {TABS.map((t) => (
-          <button
-            key={t.id}
-            type="button"
-            role="tab"
-            aria-selected={tab === t.id}
-            className={`tab ${tab === t.id ? 'is-active' : ''}`}
-            onClick={() => setTab(t.id)}
-          >
-            {t.label}
-          </button>
-        ))}
+      <nav className="teacher-menu" aria-label="Sezioni dell'area adulti">
+        {TAB_GROUPS.map((group) => {
+          const groupActive = group.tabs.some((entry) => entry.id === tab)
+          return (
+            <div key={group.id} className={`teacher-menu__group ${groupActive ? 'is-active' : ''}`}>
+              <button
+                type="button"
+                className={`teacher-menu__top ${groupActive ? 'is-active' : ''}`}
+                aria-expanded={groupActive}
+                onClick={() => setTab(group.tabs[0].id)}
+              >
+                {group.label}
+              </button>
+              <div className="teacher-submenu" role="tablist" aria-label={group.label} hidden={!groupActive}>
+                {group.tabs.map((entry) => (
+                  <button
+                    key={entry.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={tab === entry.id}
+                    className={`tab ${tab === entry.id ? 'is-active' : ''}`}
+                    onClick={() => setTab(entry.id)}
+                  >
+                    {entry.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )
+        })}
       </nav>
+      <p className="sr-only" aria-live="polite">
+        {ALL_TABS.find((entry) => entry.id === tab)?.label}
+      </p>
 
       {tab === 'profili' && <ProfilesTab />}
 

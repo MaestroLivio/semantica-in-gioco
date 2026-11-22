@@ -32,8 +32,9 @@ Requisiti: Node 20+ e un browser moderno. Nessuna API a pagamento, nessun accoun
 - **289 concetti** illustrati con relazioni tipizzate, proprietà, funzioni, contesti, esempi, ambiguità e metadati di licenza.
 - **360 esercizi verificati** nella banca curata (0 esclusi dalla validazione), più esercizi generabili con regole controllate.
 - **20 microstorie** con domande esplicite e inferenziali, **30 mappe semantiche**, **10 percorsi didattici**, **6 ambienti** con esplorazione libera e missioni.
+- **Menu a sottomenu**: quattro aree nella home del bambino (parole e categorie, relazioni e racconto, storie e mappe, esplora il mondo) e tre gruppi nell'area adulti, per evitare sezioni duplicate e schermate troppo lunghe.
 - **CAA strutturale**: barra con nove parole funzionali sempre disponibile, simboli con audio, etichette nascondibili, composizione di frasi, risposte per selezione, scansione assistita.
-- **Audio italiano** tramite sintesi vocale del dispositivo, ripetibile, con velocità e volume regolabili e registrazioni personalizzate facoltative.
+- **Audio italiano** tramite sintesi vocale neurale locale Piper (`it_IT-paola-medium`, download esplicito una volta), voce del dispositivo come fallback, ripetibile, con velocità e volume regolabili e registrazioni personalizzate facoltative.
 - **Solo caratteri maiuscoli** (opzione per profilo): tutta l'interfaccia in maiuscolo, per chi sta imparando le lettere capitali.
 - **Apprendimento adattivo**, ripetizione distribuita (1-3-7-14 giorni), dashboard con dimensioni separate, export CSV e stampa/PDF.
 - **Local-first**: profili pseudonimi, risultati e contenuti personalizzati restano sul dispositivo; import/export JSON e cancellazione effettiva.
@@ -74,7 +75,8 @@ L'app desktop interroga le release GitHub **a ogni avvio** (`electron/updater.cj
 1. confronta il tag dell'ultima release con la versione installata;
 2. se è più recente sceglie il file adatto al sistema e all'architettura — `mac-arm64.dmg` su Mac Apple Silicon, `mac-x64.dmg` su Mac Intel, `windows-x64-installer.exe` su Windows — e non scarica mai un pacchetto di un'altra piattaforma;
 3. scarica in background mostrando l'avanzamento senza bloccare l'uso;
-4. chiude l'app e apre l'installer scaricato (`shell.openPath` del DMG su macOS, avvio dell'EXE su Windows).
+4. verifica il file con SHA-256 quando la release pubblica `SHA256SUMS.txt`;
+5. chiude l'app e apre l'installer scaricato (`shell.openPath` del DMG su macOS, avvio dell'EXE su Windows).
 
 Se è in corso una sessione l'app **non** si chiude da sola: aspetta la fine del lavoro. L'interruttore «Installa automaticamente all'avvio» e il pulsante «Controlla ora» sono in *Impostazioni → Aggiornamenti*; le note della release si aprono da lì. Senza rete, o se la release non contiene un file adatto, l'app resta sulla versione installata e lo dichiara. Il file scaricato non è firmato da un'autorità: macOS e Windows chiedono comunque conferma all'apertura dell'installer.
 

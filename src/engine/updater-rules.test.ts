@@ -14,6 +14,8 @@ const rules = require('../../electron/updater-rules.cjs') as {
     platform: string,
     arch: string,
   ) => { name: string } | null
+  findChecksumAsset: (assets: { name: string; browser_download_url: string }[]) => { name: string } | null
+  parseChecksum: (text: string, filename: string) => string | null
 }
 
 const asset = (name: string) => ({ name, browser_download_url: `https://example.test/${name}` })
@@ -86,5 +88,32 @@ describe('scelta del file di installazione', () => {
   it('su Mac accetta lo zip se manca il dmg', () => {
     const chosen = rules.pickAsset([asset('semantica-in-gioco-1.3.0-mac-arm64.zip')], 'darwin', 'arm64')
     expect(chosen?.name).toBe('semantica-in-gioco-1.3.0-mac-arm64.zip')
+  })
+})
+
+describe('checksum della release', () => {
+  const hash = 'a'.repeat(64)
+
+  it('trova il file SHA256SUMS pubblicato dalla release', () => {
+    expect(rules.findChecksumAsset([asset('semantica-in-gioco-1.3.0-mac-arm64.dmg'), asset('SHA256SUMS.txt')])?.name).toBe(
+      'SHA256SUMS.txt',
+    )
+    expect(rules.findChecksumAsset([asset('release.sha256')])?.name).toBe('release.sha256')
+    expect(rules.findChecksumAsset([asset('semantica-in-gioco-1.3.0-web.zip')])).toBeNull()
+  })
+
+  it('legge l’hash del file richiesto e ignora gli altri', () => {
+    const text = [
+      `${'b'.repeat(64)}  semantica-in-gioco-1.3.0-mac-x64.dmg`,
+      `${hash}  semantica-in-gioco-1.3.0-mac-arm64.dmg`,
+    ].join('\n')
+    expect(rules.parseChecksum(text, 'semantica-in-gioco-1.3.0-mac-arm64.dmg')).toBe(hash)
+    expect(rules.parseChecksum(text, 'semantica-in-gioco-1.3.0-win-x64.zip')).toBeNull()
+  })
+
+  it('accetta il formato con asterisco e non inventa hash mancanti', () => {
+    expect(rules.parseChecksum(`${hash} *file.zip`, 'file.zip')).toBe(hash)
+    expect(rules.parseChecksum('non-un-hash  file.zip', 'file.zip')).toBeNull()
+    expect(rules.parseChecksum('', 'file.zip')).toBeNull()
   })
 })

@@ -1,5 +1,34 @@
 # Changelog
 
+## 1.3.0 — menu unificato, voce neurale più affidabile e integrità dei dati
+
+### Aggiunto
+
+- **Menu principale a sottomenu** nella home del bambino: quattro aree (Parole e categorie, Relazioni e racconto, Storie e mappe, Esplora il mondo) al posto di tre sezioni sovrapposte e di venti schede tutte visibili. I moduli 19 e 20 non sono più duplicati tra “Attività” e “Storie e mappe”.
+- **Area adulti a due livelli**: tre gruppi (Bambini, Didattica, Dati e impostazioni) con sottomenu per le sezioni operative; “Progressi e note” unifica dashboard e annotazioni, “Backup, qualità e sicurezza” unifica i controlli sui dati.
+- **Verifica SHA-256 degli aggiornamenti**: l’updater legge `SHA256SUMS.txt` dalla release, calcola l’hash del file scaricato e rifiuta i download non corrispondenti. Il pannello Aggiornamenti dichiara se il file è verificato.
+- **Backup completo delle registrazioni**: i Blob audio vengono serializzati in base64 nell’export JSON e ricostruiti all’importazione.
+- **Cancellazione a cascata del profilo** in una sola transazione IndexedDB: profilo, tentativi, note, contenuti personalizzati, sessioni e registrazioni collegate.
+- **Test CI** (`.github/workflows/ci.yml`): typecheck, test unitari, build web e controllo dei file AppleDouble.
+- **Soglia di autonomia configurabile** nel profilo (`masteryIndependent`), usata dalla home e dal riepilogo.
+- Test aggiuntivi per il parsing dei checksum e le regole di aggiornamento: **110 test totali**.
+
+### Cambiato
+
+- **Piper più affidabile**: con motore `auto`, dopo un riavvio l’app usa il modello neurale già installato invece di ricadere subito sulla voce di sistema; l’installazione imposta il profilo su `neural`; `prepareSpeech('auto')` carica Piper se presente.
+- **Coppie**: l’abbinamento esplorativo sbagliato mostra il feedback ma non registra un tentativo: l’errore entra nelle statistiche solo alla conferma.
+- **Prossimo passo**: per le parole in difficoltà il livello non è più fissato a 2, ma deriva da `suggestLevel`.
+- **Importazione backup**: ricarica anche le impostazioni globali (`meta`) e applica i valori di riserva ai profili importati.
+- **Registrazioni**: le nuove registrazioni sono legate al profilo attivo; quelle precedenti restano visibili come libreria condivisa.
+- **Code-splitting delle route**: la home carica subito solo il necessario; area adulti, sessione, atlante, storie, mappe, ambienti e impostazioni arrivano su richiesta.
+- Versione 1.3.0.
+
+### Note
+
+- La build web continua a non includere Piper: usa la voce del dispositivo o le registrazioni locali e lo dichiara.
+- Se una release non pubblica `SHA256SUMS.txt`, l’aggiornamento procede ma il pannello segnala che il file non è stato verificato.
+- I pacchetti restano non firmati con certificato di sviluppatore: macOS e Windows mostrano l’avviso al primo avvio.
+
 ## 1.2.0 — ridisegno didattico e versione web
 
 ### Aggiunto

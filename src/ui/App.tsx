@@ -1,19 +1,22 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import { useStore } from '../state/store'
 import { Btn, Modal } from './components'
 import { CommunicationBar } from './CommunicationBar'
 import { UpdateNotice } from './UpdateNotice'
 import type { Navigate, Route } from './routes'
 import { Home } from './screens/Home'
-import { ChildHome } from './screens/ChildHome'
-import { SessionScreen } from './screens/SessionScreen'
-import { Teacher } from './screens/Teacher'
-import { Explore } from './screens/Explore'
-import { Atlas } from './screens/Atlas'
-import { Stories } from './screens/Stories'
-import { Maps } from './screens/Maps'
-import { Settings } from './screens/Settings'
-import { About } from './screens/About'
+
+// Le schermate più pesanti arrivano solo quando servono: la home e il primo
+// avvio non devono scaricare subito atlante, area adulti, storie e mappe.
+const ChildHome = lazy(() => import('./screens/ChildHome').then((m) => ({ default: m.ChildHome })))
+const SessionScreen = lazy(() => import('./screens/SessionScreen').then((m) => ({ default: m.SessionScreen })))
+const Teacher = lazy(() => import('./screens/Teacher').then((m) => ({ default: m.Teacher })))
+const Explore = lazy(() => import('./screens/Explore').then((m) => ({ default: m.Explore })))
+const Atlas = lazy(() => import('./screens/Atlas').then((m) => ({ default: m.Atlas })))
+const Stories = lazy(() => import('./screens/Stories').then((m) => ({ default: m.Stories })))
+const Maps = lazy(() => import('./screens/Maps').then((m) => ({ default: m.Maps })))
+const Settings = lazy(() => import('./screens/Settings').then((m) => ({ default: m.Settings })))
+const About = lazy(() => import('./screens/About').then((m) => ({ default: m.About })))
 import { setSpeechPreferences } from '../state/speech'
 import { setUpdatesBusy } from '../state/updates'
 import { LANGUAGES, useI18n } from '../i18n'
@@ -179,26 +182,34 @@ export function App() {
       )}
 
       <main id="main" className="app-main">
-        {route.name === 'home' && <Home onNavigate={navigate} />}
-        {route.name === 'child' && <ChildHome onNavigate={navigate} />}
-        {route.name === 'session' && (
-          <SessionScreen
-            request={route.request}
-            label={route.label}
-            fixed={route.exercises}
-            onExit={() => navigate({ name: 'child' })}
-            onRestart={() => navigate({ name: 'session', request: route.request, label: route.label })}
-            onNavigate={navigate}
-            onCurrentWord={setCaaWord}
-          />
-        )}
-        {route.name === 'teacher' && <Teacher onNavigate={navigate} />}
-        {route.name === 'explore' && <Explore envId={route.envId} onNavigate={navigate} />}
-        {route.name === 'atlas' && <Atlas onNavigate={navigate} />}
-        {route.name === 'stories' && <Stories storyId={route.storyId} onNavigate={navigate} />}
-        {route.name === 'maps' && <Maps mapId={route.mapId} onNavigate={navigate} />}
-        {route.name === 'settings' && <Settings onNavigate={navigate} />}
-        {route.name === 'about' && <About onNavigate={navigate} />}
+        <Suspense
+          fallback={
+            <div className="page" role="status" aria-live="polite">
+              <p>{t('app.loading')}</p>
+            </div>
+          }
+        >
+          {route.name === 'home' && <Home onNavigate={navigate} />}
+          {route.name === 'child' && <ChildHome onNavigate={navigate} />}
+          {route.name === 'session' && (
+            <SessionScreen
+              request={route.request}
+              label={route.label}
+              fixed={route.exercises}
+              onExit={() => navigate({ name: 'child' })}
+              onRestart={() => navigate({ name: 'session', request: route.request, label: route.label })}
+              onNavigate={navigate}
+              onCurrentWord={setCaaWord}
+            />
+          )}
+          {route.name === 'teacher' && <Teacher onNavigate={navigate} />}
+          {route.name === 'explore' && <Explore envId={route.envId} onNavigate={navigate} />}
+          {route.name === 'atlas' && <Atlas onNavigate={navigate} />}
+          {route.name === 'stories' && <Stories storyId={route.storyId} onNavigate={navigate} />}
+          {route.name === 'maps' && <Maps mapId={route.mapId} onNavigate={navigate} />}
+          {route.name === 'settings' && <Settings onNavigate={navigate} />}
+          {route.name === 'about' && <About onNavigate={navigate} />}
+        </Suspense>
       </main>
 
       {showCaa && (

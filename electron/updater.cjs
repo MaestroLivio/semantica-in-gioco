@@ -18,8 +18,15 @@ const fs = require('node:fs')
 const fsp = require('node:fs/promises')
 const path = require('node:path')
 const https = require('node:https')
+const crypto = require('node:crypto')
 const { spawn } = require('node:child_process')
-const { pickAsset, isNewerVersion, normalizeVersion } = require('./updater-rules.cjs')
+const {
+  pickAsset,
+  isNewerVersion,
+  normalizeVersion,
+  findChecksumAsset,
+  parseChecksum,
+} = require('./updater-rules.cjs')
 
 const REPO = 'MaestroLivio/semantica-in-gioco'
 const RELEASES_API = `https://api.github.com/repos/${REPO}/releases/latest`
@@ -37,6 +44,7 @@ let state = {
   platform: process.platform,
   arch: process.arch,
   canInstall: false,
+  checksumVerified: false,
 }
 
 const listeners = new Set()
@@ -139,6 +147,56 @@ function getJson(url, redirects = 0) {
   })
 }
 
+function getText(url, redirects = 0) {
+  return new Promise((resolve, reject) => {
+    const request = https.get(url, { headers: { 'user-agent': USER_AGENT } }, (response) => {
+      const status = response.statusCode ?? 0
+      if (status >= 300 && status < 400 && response.headers.location && redirects < 5) {
+        response.resume()
+        resolve(getText(new URL(response.headers.location, url).toString(), redirects + 1))
+        return
+      }
+      if (status !== 200) {
+        response.resume()
+        reject(new Error(`Checksum non disponibile (${status})`))
+        return
+      }
+      let body = ''
+      response.setEncoding('utf8')
+      response.on('data', (chunk) => {
+        body += chunk
+      })
+      response.on('end', () => resolve(body))
+      response.on('error', reject)
+    })
+    request.on('error', reject)
+    request.setTimeout(20000, () => request.destroy(new Error('Richiesta dei checksum scaduta')))
+  })
+}
+
+function sha256File(file) {
+  return new Promise((resolve, reject) => {
+    const hash = crypto.createHash('sha256')
+    const stream = fs.createReadStream(file)
+    stream.on('data', (chunk) => hash.update(chunk))
+    stream.on('error', reject)
+    stream.on('end', () => resolve(hash.digest('hex')))
+  })
+}
+
+async function verifyChecksum(file, asset, release) {
+  const checksumAsset = findChecksumAsset(release?.assets)
+  if (!checksumAsset) return false
+  const text = await getText(checksumAsset.browser_download_url)
+  const expected = parseChecksum(text, asset.name)
+  if (!expected) throw new Error(`Checksum non trovato per ${asset.name}`)
+  const actual = await sha256File(file)
+  if (actual !== expected) {
+    throw new Error(`Checksum non valido per ${asset.name}`)
+  }
+  return true
+}
+
 function download(asset) {
   const folder = path.join(app.getPath('temp'), 'semantica-in-gioco-aggiornamenti')
   const destination = path.join(folder, path.basename(asset.name))
@@ -191,14 +249,14 @@ async function check({ autoInstallAfter = true } = {}) {
     return emit({ status: 'idle', error: null, version: null, canInstall: false })
   }
   checking = true
-  emit({ status: 'checking', error: null, progress: 0, canInstall: false })
+  emit({ status: 'checking', error: null, progress: 0, canInstall: false, checksumVerified: false })
   try {
     const release = await withTimeout(getJson(RELEASES_API), 20000, 'GitHub non risponde')
     const tag = normalizeVersion(release?.tag_name)
     if (!tag) throw new Error('La release non ha una versione leggibile')
     const notesUrl = typeof release?.html_url === 'string' ? release.html_url : null
     if (!isNewerVersion(tag, app.getVersion())) {
-      return emit({ status: 'up-to-date', version: tag, notesUrl, progress: 0 })
+      return emit({ status: 'up-to-date', version: tag, notesUrl, progress: 0, checksumVerified: false })
     }
     const asset = pickAsset(release.assets, process.platform, process.arch)
     if (!asset) {
@@ -207,11 +265,13 @@ async function check({ autoInstallAfter = true } = {}) {
         version: tag,
         notesUrl,
         error: `Nessun file per ${process.platform} ${process.arch}`,
+        checksumVerified: false,
       })
     }
-    emit({ status: 'available', version: tag, assetName: asset.name, notesUrl, progress: 0 })
+    emit({ status: 'available', version: tag, assetName: asset.name, notesUrl, progress: 0, checksumVerified: false })
     pendingFile = await download(asset)
-    emit({ status: 'ready', progress: 100, canInstall: true })
+    const verified = await verifyChecksum(pendingFile, asset, release)
+    emit({ status: 'ready', progress: 100, canInstall: true, checksumVerified: verified })
     // Chiusura automatica solo se l'adulto non sta lavorando e l'ha consentito.
     if (autoInstallAfter && settings.autoInstall) {
       setTimeout(() => {

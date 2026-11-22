@@ -14,6 +14,7 @@ export const STRINGS = {
   // ——— struttura dell'app ———
   'app.tagline': { it: 'parole, immagini e significati', en: 'words, pictures and meanings' },
   'app.boot': { it: "Sto preparando l'atlante dei significati…", en: 'Preparing the atlas of meanings…' },
+  'app.loading': { it: 'Apro la sezione…', en: 'Opening the section…' },
   'app.skipLink': { it: 'Vai al contenuto principale', en: 'Skip to main content' },
   'app.nav.main': { it: 'Azioni principali', en: 'Main actions' },
   'app.nav.accessibility': { it: 'Accessibilità', en: 'Accessibility' },
@@ -252,6 +253,14 @@ export const STRINGS = {
     en: 'Closing the app and opening the installer…',
   },
   'update.install': { it: 'Installa e riavvia', en: 'Install and restart' },
+  'update.verified': {
+    it: 'File verificato con SHA-256.',
+    en: 'File verified with SHA-256.',
+  },
+  'update.unverified': {
+    it: 'La release non pubblica un checksum: il file non è stato verificato.',
+    en: 'The release does not publish a checksum: the file was not verified.',
+  },
   'update.autoInstall': {
     it: "Installa automaticamente all'avvio",
     en: 'Install automatically at startup',
@@ -479,6 +488,35 @@ export const STRINGS = {
   'child.activities.note': {
     it: '20 moduli con livelli modificabili. Tocca un modulo per scegliere il livello.',
     en: '20 modules with adjustable levels. Tap a module to choose the level.',
+  },
+  'child.menu.title': { it: 'Il mio menu', en: 'My menu' },
+  'child.menu.note': {
+    it: 'Quattro aree, un solo posto da cui partire. Apri un’area e scegli l’attività: le sezioni simili sono state unite.',
+    en: 'Four areas, one place to start. Open an area and choose an activity: similar sections are now together.',
+  },
+  'child.menu.words.title': { it: 'Parole e categorie', en: 'Words and categories' },
+  'child.menu.words.note': {
+    it: 'Riconoscere, categorizzare, usare funzioni e caratteristiche.',
+    en: 'Recognise, categorise, use functions and features.',
+  },
+  'child.menu.relations.title': { it: 'Relazioni e racconto', en: 'Relations and narrative' },
+  'child.menu.relations.note': {
+    it: 'Sinonimi, contrari, spazio, tempo, verbi, frasi, descrizioni e inferenze.',
+    en: 'Synonyms, opposites, space, time, verbs, sentences, descriptions and inferences.',
+  },
+  'child.menu.labs.title': { it: 'Storie e mappe', en: 'Stories and maps' },
+  'child.menu.labs.note': {
+    it: 'Laboratori di esplorazione: qui trovi anche i moduli 19 e 20.',
+    en: 'Exploration labs: modules 19 and 20 live here too.',
+  },
+  'child.menu.world.title': { it: 'Esplora il mondo', en: 'Explore the world' },
+  'child.menu.world.note': {
+    it: 'Atlante delle parole e ambienti da esplorare liberamente.',
+    en: 'The word atlas and environments to explore freely.',
+  },
+  'child.menu.world.atlas': {
+    it: 'Tutte le parole illustrate, con relazioni e scheda parola.',
+    en: 'Every illustrated word, with relations and a word card.',
   },
   'child.module.levels': { it: 'Livelli {from}–{to}', en: 'Levels {from}–{to}' },
   'child.module.consolidated': {

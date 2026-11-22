@@ -85,7 +85,9 @@ function currentEngine(): SpeechEngine {
     case 'system':
       return systemEngine
     default:
-      if (neuralEngine.status().state === 'ready') return neuralEngine
+      // 'auto' deve usare Piper anche dopo un riavvio: il modello è già
+      // installato e `play()` lo prepara in modo trasparente al primo uso.
+      if (neuralEngine.status().state === 'ready' || neuralEngine.isInstalled()) return neuralEngine
       if (recordedEngine.status().state === 'ready') return recordedEngine
       return systemEngine
   }
@@ -96,9 +98,9 @@ function pickEngineFor(text: string): SpeechEngine {
   if (preferences.engine === 'neural') return currentEngine()
   if (preferences.engine === 'recorded') {
     if (recordedEngine.hasClip(text)) return recordedEngine
-    return neuralEngine.status().state === 'ready' ? neuralEngine : systemEngine
+    return neuralEngine.status().state === 'ready' || neuralEngine.isInstalled() ? neuralEngine : systemEngine
   }
-  if (neuralEngine.status().state === 'ready') return neuralEngine
+  if (neuralEngine.status().state === 'ready' || neuralEngine.isInstalled()) return neuralEngine
   if (recordedEngine.hasClip(text)) return recordedEngine
   return systemEngine
 }
@@ -138,12 +140,25 @@ export function speak(text: string, opts: SpeechOptions = {}): void {
         for (let attempt = 0; attempt <= repeat; attempt++) {
           if (attempt > 0) await wait(Math.max(200, pauseBefore))
           if (interrupted) return
-          await engine.play(spoken, {
-            rate,
-            volume,
-            voiceURI,
-            onStart: attempt === 0 ? opts.onStart : undefined,
-          })
+          try {
+            await engine.play(spoken, {
+              rate,
+              volume,
+              voiceURI,
+              onStart: attempt === 0 ? opts.onStart : undefined,
+            })
+          } catch (error) {
+            // Se Piper non riesce a sintetizzare (modello corrotto, WASM non
+            // disponibile), la frase non deve sparire: si usa la voce del
+            // dispositivo, dichiarata come fallback.
+            if (engine === systemEngine) throw error
+            await systemEngine.play(spoken, {
+              rate,
+              volume,
+              voiceURI,
+              onStart: attempt === 0 ? opts.onStart : undefined,
+            })
+          }
           if (interrupted) return
         }
         if (pauseAfter) await wait(pauseAfter)
@@ -186,7 +201,13 @@ export async function prepareSpeech(target: 'auto' | EngineKind = preferences.en
     return ok
   }
   if (target === 'system') return systemEngine.prepare()
-  // 'auto': usa il pacchetto pregenerato se esiste, senza scaricare il modello.
+  // 'auto': se Piper è già installato lo carica, altrimenti usa il pacchetto
+  // pregenerato (o la voce di sistema) senza scaricare il modello.
+  if (neuralEngine.isInstalled()) {
+    const ok = await neuralEngine.prepare()
+    notify()
+    return ok
+  }
   const recorded = await recordedEngine.prepare()
   notify()
   return recorded

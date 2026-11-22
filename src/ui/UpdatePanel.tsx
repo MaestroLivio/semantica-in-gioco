@@ -44,6 +44,11 @@ export function UpdatePanel() {
       <p className="muted" aria-live="polite">
         {state ? statusText(state, t) : t('update.idle')}
       </p>
+      {state?.status === 'ready' && (
+        <p className="muted" role="status">
+          {state.checksumVerified ? t('update.verified') : t('update.unverified')}
+        </p>
+      )}
       <div className="actions-row">
         <Btn
           variant="secondary"

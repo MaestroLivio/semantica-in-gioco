@@ -69,6 +69,30 @@ function usableAssets(assets) {
  * Restituisce `null` se la release non contiene un file adatto: meglio dirlo
  * che scaricare il pacchetto sbagliato.
  */
+/** Il file dei checksum pubblicato insieme alla release, se presente. */
+function findChecksumAsset(assets) {
+  return (
+    usableAssets(assets).find((asset) => {
+      const name = nameOf(asset)
+      return name === 'sha256sums.txt' || name.endsWith('.sha256') || name.endsWith('.sha256.txt')
+    }) ?? null
+  )
+}
+
+/**
+ * Estrae l'hash SHA-256 del file indicato da un elenco nel formato
+ * "<hash>  <nome file>" (sha256sum). Restituisce null se non c'è.
+ */
+function parseChecksum(text, filename) {
+  if (typeof text !== 'string' || typeof filename !== 'string') return null
+  const wanted = filename.trim().toLowerCase()
+  for (const line of text.split(/\r?\n/)) {
+    const match = /^([a-f0-9]{64})\s+\*?(.+?)\s*$/i.exec(line.trim())
+    if (match && match[2].toLowerCase() === wanted) return match[1].toLowerCase()
+  }
+  return null
+}
+
 function pickAsset(assets, platform, arch) {
   const list = usableAssets(assets)
   if (platform === 'darwin') {
@@ -104,4 +128,11 @@ function pickAsset(assets, platform, arch) {
   return null
 }
 
-module.exports = { normalizeVersion, compareVersions, isNewerVersion, pickAsset }
+module.exports = {
+  normalizeVersion,
+  compareVersions,
+  isNewerVersion,
+  pickAsset,
+  findChecksumAsset,
+  parseChecksum,
+}

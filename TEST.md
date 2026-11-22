@@ -11,7 +11,7 @@ npm run e2e       # Playwright (richiede browser installati)
 
 ### Copertura attuale
 
-**Stato**: 105 test superati (27 contenuti, 27 motore, 23 modello didattico, 18 audio, 10 regole dell'aggiornamento).
+**Stato**: 110 test superati (27 contenuti, 27 motore, 23 modello didattico, 18 audio, 13 regole dell'aggiornamento e checksum).
 
 **Contenuti** (`src/data/content.test.ts`)
 

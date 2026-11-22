@@ -49,6 +49,8 @@ export interface ChildProfile {
   masterySessions: number
   masteryKinds: number
   masteryAccuracy: number
+  /** Risposte autonome consecutive richieste per considerare una parola stabile. */
+  masteryIndependent: number
   reviewIntervals: number[]
   sessionLength: number
   objectives: string[]
@@ -95,6 +97,7 @@ export function createProfile(nickname: string, index = 0): ChildProfile {
     masterySessions: 2,
     masteryKinds: 3,
     masteryAccuracy: 0.75,
+    masteryIndependent: 3,
     reviewIntervals: [1, 3, 7, 14],
     sessionLength: 8,
     objectives: [],

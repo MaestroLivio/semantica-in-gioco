@@ -1,7 +1,7 @@
 {
   "name": "semantica-in-gioco",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.3.0",
   "type": "module",
   "description": "Semantica in Gioco - ambiente educativo per lo sviluppo della competenza lessicale e semantica",
   "scripts": {
@@ -51,6 +51,7 @@
     "compression": "normal",
     "afterExtract": "scripts/strip-appledouble.cjs",
     "afterPack": "scripts/strip-appledouble.cjs",
+    "afterSign": "scripts/adhoc-sign.cjs",
     "directories": {
       "output": "release",
       "buildResources": "build"
