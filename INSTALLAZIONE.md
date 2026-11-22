@@ -125,7 +125,7 @@ Il prefisso in `/tmp` evita di toccare quello usato dalle app Wineskin dell'uten
 ## Limiti noti dei pacchetti
 
 - **Nessuna firma digitale**: macOS e Windows mostrano avvisi; per distribuire senza avvisi servono certificati Apple Developer ID e un certificato di code signing Windows. L'aggiornamento automatico apre l'installer, ma non può evitare questi avvisi.
-- **Integrità dell'aggiornamento**: il file arriva via HTTPS dall'API GitHub con il nome atteso per piattaforma e architettura, ma non c'è ancora un controllo di un checksum pubblicato nella release. Va aggiunto prima di considerare l'aggiornamento resistente a manomissioni dell'hosting.
+- **Integrità dell'aggiornamento**: il file arriva via HTTPS dall'API GitHub con il nome atteso per piattaforma e architettura e viene verificato con SHA-256 quando la release pubblica `SHA256SUMS.txt`. Se il file dei checksum manca, l'app lo dichiara e l'aggiornamento prosegue: per una protezione completa contro manomissioni dell'hosting, verifica il checksum anche a mano.
 - **La release 1.2.0 copre macOS (arm64 e x64) e Windows x64**: i pacchetti Linux restano alla 1.0.0 finché non vengono rigenerati.
 - **Windows non è stato avviato su un sistema reale** in questa sessione: l'installer è stato costruito e controllato nel formato, ma va provato su una macchina Windows prima della distribuzione.
 - **Android non ha un pacchetto nativo**: si installa la PWA da Chrome. Un `.apk` richiederebbe Android SDK e un contenitore Capacitor/TWA.

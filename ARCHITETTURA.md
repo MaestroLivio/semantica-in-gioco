@@ -111,6 +111,7 @@ La scelta del motore segue `ChildProfile.ttsEngine` (`auto` usa la voce neurale 
 - `SessionPlayer.tsx` implementa tutti i tipi di esercizio: scelta singola, etichetta, selezione multipla, coppie, ordinamento, categorizzazione, intruso, collocazione spaziale, frase con simboli, recupero con aiuti, descrizione con mappa.
 - Gli errori non producono punizioni: indizio, rimozione di un distrattore, nuovo tentativo, modello completo dopo più tentativi.
 - `useScan` implementa la scansione assistita; i tasti 1-9, R (ripeti), H (aiuto) e Invio sono scorciatoie documentate.
+- `App.tsx` carica con `React.lazy` le schermate pesanti (area adulti, sessione, atlante, storie, mappe, ambienti, impostazioni): la home non scarica subito tutto il bundle.
 - `CommunicationBar` è montata sopra il contenuto durante sessioni, storie e ambienti.
 
 ## PWA e offline
@@ -129,7 +130,8 @@ La scelta del motore segue `ChildProfile.ttsEngine` (`auto` usa la voce neurale 
 - `electron/updater.cjs` fa il resto nel processo principale: `GET https://api.github.com/repos/MaestroLivio/semantica-in-gioco/releases/latest`, download con redirect e avanzamento, poi `shell.openPath` del DMG su macOS o avvio dell'EXE su Windows, quindi `app.quit()`.
 - Il renderer non tocca la rete: `electron/preload.cjs` espone `window.semantica.updates` (`status`, `check`, `install`, `settings`, `onChange`, `setBusy`) e il main risponde via `ipcMain.handle`. L'unico URL apribile nel browser di sistema è `https://github.com/...`.
 - Lo stato `busy` arriva da `App.tsx` (route `session`): finché è vero il download continua ma la chiusura automatica è rinviata, per non perdere il lavoro.
-- Non si usa `electron-updater`: senza firma digitale Squirrel.Mac rifiuterebbe l'aggiornamento, mentre aprire l'installer funziona su tutte le piattaforme. Non c'è ancora un checksum pubblicato da verificare.
+- Non si usa `electron-updater`: senza firma digitale Squirrel.Mac rifiuterebbe l'aggiornamento, mentre aprire l'installer funziona su tutte le piattaforme.
+- Il file scaricato viene verificato con SHA-256 quando la release pubblica `SHA256SUMS.txt` (`findChecksumAsset`/`parseChecksum` in `updater-rules.cjs`, `verifyChecksum` in `updater.cjs`). Se il checksum manca, l'aggiornamento prosegue ma lo stato `checksumVerified` resta falso e il pannello lo dichiara.
 
 ## Estensioni previste
 
