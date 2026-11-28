@@ -17,6 +17,7 @@ Nessun installer è firmato con un certificato di sviluppatore: non ci sono cert
 | `semantica-in-gioco-1.2.0-windows-x64-installer.exe` | Windows 10/11 x64 | Installer NSIS, installazione per utente |
 | `semantica-in-gioco-1.2.0-windows-x64.zip` | Windows 10/11 x64 | Versione portatile, nessuna installazione |
 | `semantica-in-gioco-1.2.0-web.zip` | Qualsiasi browser, **ChromeOS**, **Android** | Build statica da pubblicare su HTTPS |
+| `semantica-in-gioco-1.2.0-pwa.zip` | Qualsiasi browser | Stessa build nella release PWA, installabile da <https://maestrolivio.github.io/semantica-in-gioco/> |
 
 I pacchetti Linux non sono inclusi nella release e si rigenerano con `npm run dist:linux`.
 
@@ -76,7 +77,7 @@ Requisiti: distribuzione x64 o arm64 con GLIBC recente. Dati in `~/.config/Seman
 Né ChromeOS né Android eseguono `.dmg`, `.exe` o AppImage. Su entrambi la via supportata è la **PWA**; sui Chromebook che supportano Linux si può usare anche il pacchetto **.deb**. Non esiste un pacchetto Android nativo: Electron non produce APK e in questo progetto non c'è un contenitore Capacitor/TWA.
 
 **PWA (tutti i Chromebook)**
-1. Pubblica il contenuto di `dist/` (o scompatta `semantica-in-gioco-1.2.0-web.zip`) su un hosting **HTTPS**: GitHub Pages, Cloudflare Pages, Netlify, un server scolastico. In locale funziona anche `http://localhost`.
+1. Apri <https://maestrolivio.github.io/semantica-in-gioco/> in Chrome (build ufficiale su GitHub Pages). In alternativa pubblica `dist/` o l'archivio `-web.zip` su un hosting **HTTPS**; in locale funziona anche `http://localhost`.
 2. Apri l'indirizzo in Chrome sul Chromebook.
 3. Menu ⋮ → **Installa Semantica in Gioco** (o l'icona di installazione nella barra degli indirizzi).
 4. L'app si apre in una finestra propria, compare nel launcher e funziona **offline** dopo la prima visita, grazie al service worker.
@@ -89,7 +90,7 @@ Per l'uso in classe senza internet: pubblica la build su un server della rete lo
 3. Avvia dal launcher di ChromeOS.
 
 **Android (tablet e telefoni)**
-1. Pubblica `semantica-in-gioco-1.2.0-web.zip` (o `dist/`) su un hosting **HTTPS**.
+1. Apri <https://maestrolivio.github.io/semantica-in-gioco/> in Chrome, oppure pubblica `dist/` su un tuo hosting **HTTPS**.
 2. Apri l'indirizzo in Chrome su Android.
 3. Menu ⋮ → **Aggiungi a schermata Home** / **Installa app**.
 4. L'app parte a schermo intero e funziona offline dopo la prima visita.

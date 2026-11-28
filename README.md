@@ -80,9 +80,11 @@ L'app desktop interroga le release GitHub **a ogni avvio** (`electron/updater.cj
 
 Se è in corso una sessione l'app **non** si chiude da sola: aspetta la fine del lavoro. L'interruttore «Installa automaticamente all'avvio» e il pulsante «Controlla ora» sono in *Impostazioni → Aggiornamenti*; le note della release si aprono da lì. Senza rete, o se la release non contiene un file adatto, l'app resta sulla versione installata e lo dichiara. Il file scaricato non è firmato da un'autorità: macOS e Windows chiedono comunque conferma all'apertura dell'installer.
 
-## Versione web
+## Progressive Web App
 
-La build statica (`npm run build:web`) è distribuita come `semantica-in-gioco-<versione>-web.zip` nelle release: nessun backend, dati nel browser. In questa build la voce neurale Piper non è inclusa (108 MB di WebAssembly): l'app usa la voce italiana del dispositivo o le registrazioni personalizzate, e lo dichiara in *Impostazioni → Voce e modello*.
+La versione web è installabile come PWA da <https://maestrolivio.github.io/semantica-in-gioco/> (GitHub Pages, branch `gh-pages`): Chrome/Edge mostrano l'icona di installazione nella barra degli indirizzi, Safari su macOS usa *File → Aggiungi al Dock*. Funziona offline dopo la prima visita grazie al service worker e non ha backend: i dati restano nel browser.
+
+La stessa build è nelle release come `semantica-in-gioco-<versione>-pwa.zip` (500 file, 3,7 MB), da pubblicare su un hosting HTTPS se serve una copia propria. In questa build la voce neurale Piper non è inclusa (oltre 100 MB di WebAssembly): l'app usa la voce italiana del dispositivo o le registrazioni personalizzate, e lo dichiara in *Impostazioni → Voce e modello*.
 
 ## App desktop e installer
 
