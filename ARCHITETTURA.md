@@ -127,7 +127,7 @@ La scelta del motore segue `ChildProfile.ttsEngine` (`auto` usa la voce neurale 
 ## Aggiornamento dell'app desktop
 
 - `electron/updater-rules.cjs` contiene le sole regole pure: confronto semver e scelta del file per `platform`/`arch`. È testato da `src/engine/updater-rules.test.ts` senza avviare Electron.
-- `electron/updater.cjs` fa il resto nel processo principale: `GET https://api.github.com/repos/MaestroLivio/semantica-in-gioco/releases/latest`, download con redirect e avanzamento, poi `shell.openPath` del DMG su macOS o avvio dell'EXE su Windows, quindi `app.quit()`.
+- `electron/updater.cjs` fa il resto nel processo principale: `GET https://api.github.com/repos/MaestroLivio/SemanticaInGioco/releases/latest`, download con redirect e avanzamento, poi `shell.openPath` del DMG su macOS o avvio dell'EXE su Windows, quindi `app.quit()`.
 - Il renderer non tocca la rete: `electron/preload.cjs` espone `window.semantica.updates` (`status`, `check`, `install`, `settings`, `onChange`, `setBusy`) e il main risponde via `ipcMain.handle`. L'unico URL apribile nel browser di sistema è `https://github.com/...`.
 - Lo stato `busy` arriva da `App.tsx` (route `session`): finché è vero il download continua ma la chiusura automatica è rinviata, per non perdere il lavoro.
 - Non si usa `electron-updater`: senza firma digitale Squirrel.Mac rifiuterebbe l'aggiornamento, mentre aprire l'installer funziona su tutte le piattaforme.

@@ -66,7 +66,7 @@ Documentazione: [PEDAGOGIA.md](PEDAGOGIA.md), [ARCHITETTURA.md](ARCHITETTURA.md)
 
 ## Dove si scarica
 
-Repository: <https://github.com/MaestroLivio/semantica-in-gioco>. Le versioni installabili sono nelle **release** GitHub: <https://github.com/MaestroLivio/semantica-in-gioco/releases>. Ogni release contiene gli installer macOS (`.dmg` arm64 e x64), l'installer Windows x64 (`.exe` NSIS), l'archivio della build web e i checksum `SHA256SUMS.txt`.
+Repository: <https://github.com/MaestroLivio/SemanticaInGioco>. Le versioni installabili sono nelle **release** GitHub: <https://github.com/MaestroLivio/SemanticaInGioco/releases>. Ogni release contiene gli installer macOS (`.dmg` arm64 e x64), l'installer Windows x64 (`.exe` NSIS), l'archivio della build web e i checksum `SHA256SUMS.txt`.
 
 ## Aggiornamento automatico
 
@@ -82,7 +82,7 @@ Se è in corso una sessione l'app **non** si chiude da sola: aspetta la fine del
 
 ## Progressive Web App
 
-La versione web è installabile come PWA da <https://maestrolivio.github.io/semantica-in-gioco/> (GitHub Pages, branch `gh-pages`): Chrome/Edge mostrano l'icona di installazione nella barra degli indirizzi, Safari su macOS usa *File → Aggiungi al Dock*. Funziona offline dopo la prima visita grazie al service worker e non ha backend: i dati restano nel browser.
+La versione web è installabile come PWA da <https://maestrolivio.github.io/SemanticaInGioco/> (GitHub Pages, branch `gh-pages`): Chrome/Edge mostrano l'icona di installazione nella barra degli indirizzi, Safari su macOS usa *File → Aggiungi al Dock*. Funziona offline dopo la prima visita grazie al service worker e non ha backend: i dati restano nel browser.
 
 La stessa build è nelle release come `semantica-in-gioco-<versione>-pwa.zip` (500 file, 3,7 MB), da pubblicare su un hosting HTTPS se serve una copia propria. In questa build la voce neurale Piper non è inclusa (oltre 100 MB di WebAssembly): l'app usa la voce italiana del dispositivo o le registrazioni personalizzate, e lo dichiara in *Impostazioni → Voce e modello*.
 

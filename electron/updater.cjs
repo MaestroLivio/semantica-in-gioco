@@ -28,7 +28,7 @@ const {
   parseChecksum,
 } = require('./updater-rules.cjs')
 
-const REPO = 'MaestroLivio/semantica-in-gioco'
+const REPO = 'MaestroLivio/SemanticaInGioco'
 const RELEASES_API = `https://api.github.com/repos/${REPO}/releases/latest`
 const USER_AGENT = 'SemanticaInGioco-Updater'
 const ALLOWED_RELEASE_PREFIX = 'https://github.com/'
